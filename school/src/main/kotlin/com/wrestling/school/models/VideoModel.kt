@@ -1,11 +1,11 @@
-package com.wrestling.school.resources
+package com.wrestling.school.models
 
 import java.util.*
 
 /**
  * Видео
  */
-data class VideoResource (
+data class VideoModel (
         /**
          * Идентификатор видео
          */

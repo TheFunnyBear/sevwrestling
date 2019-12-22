@@ -5,6 +5,7 @@ plugins {
     kotlin("plugin.jpa") version kotlinVersion;
     id("org.springframework.boot") version "2.2.2.RELEASE";
     id("io.spring.dependency-management") version "1.0.8.RELEASE";
+    id ("net.ltgt.apt") version "0.8";
     kotlin("jvm") version kotlinVersion;
     kotlin("plugin.spring") version kotlinVersion;
 }
@@ -34,6 +35,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("com.h2database:h2")
+    implementation( "org.mapstruct:mapstruct:1.3.1.Final")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")

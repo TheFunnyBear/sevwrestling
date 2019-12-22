@@ -1,11 +1,11 @@
-package com.wrestling.school.resources
+package com.wrestling.school.models
 
 import java.util.*
 
 /**
  * Изображение
  */
-data class PictureResource (
+data class PictureModel (
         /**
          * Идентификатор изображения
          */

@@ -1,24 +1,27 @@
 package com.wrestling.school.controllers
 
+import com.wrestling.school.dtos.MessageDto
+import com.wrestling.school.mappers.MessageConverter
 import com.wrestling.school.repositories.MessagesRepository
-import com.wrestling.school.resources.MessageResource
+import com.wrestling.school.models.MessageModel
+import javafx.application.Application
+import org.mapstruct.factory.Mappers
+import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api")
 class MessagesController (private val repository: MessagesRepository){
+    private val log = LoggerFactory.getLogger(Application::class.java)
 
     /**
      * Возвращает все сообщения
      */
     @GetMapping("/messages")
-    fun findAll(): List<MessageResource> {
+    fun findAll(): List<MessageModel> {
         return repository.findAll().map {
-            messageDto -> MessageResource(
+            messageDto -> MessageModel(
                 messageDto.id,
                 messageDto.messageTitle,
                 messageDto.messageText,
@@ -32,9 +35,9 @@ class MessagesController (private val repository: MessagesRepository){
      * Возвращает сообщение по его идентификатору
      */
     @GetMapping("/message/{id}")
-    fun findById(@PathVariable id: Long): ResponseEntity<MessageResource>? {
+    fun findById(@PathVariable id: Long): ResponseEntity<MessageModel>? {
         return repository.findById(id).map {
-            ResponseEntity.ok(MessageResource(
+            ResponseEntity.ok(MessageModel(
                     it.id,
                     it.messageTitle,
                     it.messageText,
@@ -44,10 +47,54 @@ class MessagesController (private val repository: MessagesRepository){
         }.orElseGet { ResponseEntity.notFound().build() }
     }
 
+    /**
+     * Создаёт новое сообщение
+     */
+    @PostMapping("/message/create")
+    fun create(@RequestBody message :MessageModel) {
+        log.info("Создание нового сообщения.")
 
-    @GetMapping("/greeting")
-    fun greeting() : String
+        val converter = Mappers.getMapper(MessageConverter::class.java)
+        val messageDto = converter.convertToDto(message);
+        repository.save(messageDto);
+
+        log.info("Создание созданно.")
+    }
+
+    /**
+     * Обновляем сообщение
+     */
+    @PutMapping("/message/update/{id}")
+    fun update(@PathVariable id: Long, @RequestBody message :MessageModel) : ResponseEntity<MessageModel>
     {
-        return "Hi!!!";
+        val existingMessage = repository.findById(id);
+        if(existingMessage != null) {
+            var existingMessageDto: MessageDto = existingMessage as MessageDto
+            var updateMessageDto =  existingMessageDto.copy(messageTitle = message.messageTitle)
+
+            val result = repository.save(updateMessageDto);
+
+            if (result != null) {
+                val converter = Mappers.getMapper(MessageConverter::class.java)
+                val messageModel = converter.convertToModel(result);
+
+                return ResponseEntity.ok(messageModel);
+            }
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    /**
+     * Удаляем сообщение
+     */
+    @PutMapping("/message/delete/{id}")
+    fun delete(@PathVariable id: Long)
+    {
+        log.info("Удаление сообщения.")
+
+        repository.deleteById(id);
+
+        log.info("Сообщение удалено.")
     }
 }

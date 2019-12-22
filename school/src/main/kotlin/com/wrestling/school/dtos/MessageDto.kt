@@ -11,7 +11,6 @@ import javax.persistence.Id
  */
 @Entity
 data class MessageDto (
-
         /**
          * Идентификатор записи
          */
