@@ -1,38 +1,45 @@
-package com.wrestling.school.resources
+package com.wrestling.school.dtos
 
 import java.util.*
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
 
 /**
- * Видео
+ *
  */
+@Entity
 data class VideoResource (
         /**
          * Идентификатор видео
          */
-        val id: Long,
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        val id: Long = 0,
 
         /**
          * Уникальны идентификатор видео
          */
-        val videoUuid: UUID,
+        val videoUuid: UUID = UUID.randomUUID(),
 
         /**
          * Имя файла
          */
-        val fileName: String,
+        val fileName: String = "",
 
         /**
          * Размер файла в байтах
          */
-        val fileSize: Long,
+        val fileSize: Long = 0,
 
         /**
          * Коментарий к файлу
          */
-        val fileComment: String,
+        val fileComment: String = "",
 
         /**
          * Файл удалён
          */
-        val isDeleted: Boolean
+        val isDeleted: Boolean = false
 )

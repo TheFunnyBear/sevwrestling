@@ -2,12 +2,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     val kotlinVersion = "1.3.61";
-    kotlin("plugin.jpa") version kotlinVersion
-    id("org.springframework.boot") version "2.2.2.RELEASE"
-    id("io.spring.dependency-management") version "1.0.8.RELEASE"
-    kotlin("jvm") version kotlinVersion
-    kotlin("plugin.spring") version kotlinVersion
-
+    kotlin("plugin.jpa") version kotlinVersion;
+    id("org.springframework.boot") version "2.2.2.RELEASE";
+    id("io.spring.dependency-management") version "1.0.8.RELEASE";
+    kotlin("jvm") version kotlinVersion;
+    kotlin("plugin.spring") version kotlinVersion;
 }
 
 group = "com.wrestling"
@@ -21,8 +20,9 @@ configurations {
     }
 }
 
+
 repositories {
-    mavenCentral()
+    mavenCentral();
 }
 
 dependencies {
