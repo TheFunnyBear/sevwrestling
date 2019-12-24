@@ -2,13 +2,17 @@ package com.wrestling.school.controllers
 
 import com.wrestling.school.dtos.MessageDto
 import com.wrestling.school.mappers.MessageConverter
-import com.wrestling.school.repositories.MessagesRepository
 import com.wrestling.school.models.MessageModel
+import com.wrestling.school.repositories.MessagesRepository
 import javafx.application.Application
 import org.mapstruct.factory.Mappers
 import org.slf4j.LoggerFactory
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+
 
 @RestController
 @RequestMapping("/api")
@@ -26,8 +30,23 @@ class MessagesController (private val repository: MessagesRepository){
                 messageDto.messageTitle,
                 messageDto.messageText,
                 messageDto.pictureUuid,
-                messageDto.isDeleted
-                )
+                messageDto.isDeleted)
+        }
+    }
+
+    /**
+     * Возвращает пагинированный список с 10-ю элементами для страницы
+     */
+    @GetMapping("/messages/{page}")
+    fun getPage(@PathVariable page: Int): Page<MessageModel> {
+        val currentPageWithTenMessages: Pageable = PageRequest.of(page, 10);
+        return repository.findAll(currentPageWithTenMessages).map {
+            messageDto -> MessageModel(
+                messageDto.id,
+                messageDto.messageTitle,
+                messageDto.messageText,
+                messageDto.pictureUuid,
+                messageDto.isDeleted)
         }
     }
 
