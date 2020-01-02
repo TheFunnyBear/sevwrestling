@@ -1,5 +1,7 @@
 package com.wrestling.school.dtos
 
+import org.springframework.data.annotation.CreatedDate
+import java.time.LocalDateTime
 import java.util.*
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -17,6 +19,17 @@ data class MessageDto (
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         val id: Long = 0,
+
+        /**
+         * Дата создания сообщения
+         */
+        @CreatedDate
+        val createdDate: LocalDateTime = LocalDateTime.now(),
+
+        /**
+         * Дата публикации сообщения
+         */
+        val publicationDate: LocalDateTime = LocalDateTime.now(),
 
         /**
          * Заголовок сообщения

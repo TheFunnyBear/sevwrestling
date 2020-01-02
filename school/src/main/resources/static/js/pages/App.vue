@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>Список новостей:</div>
-        <MessagesList :messages="messages"  :totalPages="totalPages" :currentPage="currentPage" :clickCallback="clickCallback"/>
+        <MessagesList :messages="messages"  :totalPages="totalPages" :currentPage="currentPage" :perPage="perPage"/>
     </div>
 </template>
 
@@ -14,12 +14,9 @@
         },
         data() {
             return {
-                currentPage: 0,
-                totalPages: 5,
-                clickCallback: function (pageNum) {
-                    this.currentPage = pageNum;
-                    console.log(pageNum);
-                },
+                currentPage: 1,
+                totalPages: 50,
+                perPage: 9,
                 messages: []
             }
         }

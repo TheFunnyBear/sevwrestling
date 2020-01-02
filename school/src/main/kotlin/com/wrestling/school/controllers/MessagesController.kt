@@ -27,6 +27,8 @@ class MessagesController (private val repository: MessagesRepository){
         return repository.findAll().map {
             messageDto -> MessageModel(
                 messageDto.id,
+                messageDto.createdDate,
+                messageDto.publicationDate,
                 messageDto.messageTitle,
                 messageDto.messageText,
                 messageDto.pictureUuid,
@@ -43,6 +45,8 @@ class MessagesController (private val repository: MessagesRepository){
         return repository.findAll(currentPageWithTenMessages).map {
             messageDto -> MessageModel(
                 messageDto.id,
+                messageDto.createdDate,
+                messageDto.publicationDate,
                 messageDto.messageTitle,
                 messageDto.messageText,
                 messageDto.pictureUuid,
@@ -58,6 +62,8 @@ class MessagesController (private val repository: MessagesRepository){
         return repository.findById(id).map {
             ResponseEntity.ok(MessageModel(
                     it.id,
+                    it.createdDate,
+                    it.publicationDate,
                     it.messageTitle,
                     it.messageText,
                     it.pictureUuid,
