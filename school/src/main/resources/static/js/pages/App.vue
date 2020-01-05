@@ -6,7 +6,7 @@
 </template>
 
 <script>
-    import MessagesList from 'components/messages/MessagesList.vue'
+    import MessagesList from '../components/messages/MessagesList.vue'
 
     export default {
         components: {

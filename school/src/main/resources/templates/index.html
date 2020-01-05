@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Test application</title>
-    <script th:inline="javascript">
-        var frontendData = [[${frontendData}]];
-    </script>
+    <meta charset="utf-8">
+    <title>Routing Example App</title>
 </head>
 <body>
-<h3>Hello to messages section</h3>
 <div id="app"></div>
-<script th:src="${isDevMode} ? 'http://localhost:8000/main.js' : '/js/main.js'"></script>
+<script src="/dist/build.js"></script>
 </body>
 </html>
