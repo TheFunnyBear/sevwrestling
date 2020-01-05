@@ -1,33 +1,28 @@
-const path = require('path');
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const path = require('path')
+var VueLoaderPlugin = require('vue-loader/lib/plugin');
+var webpack = require('webpack')
 
 module.exports = {
-    mode: 'development',
-    devtool: 'source-map',
     entry: path.join(__dirname, 'src', 'main', 'resources', 'static', 'js', 'main.js'),
-    devServer: {
-        contentBase: './dist',
-        compress: true,
-        port: 8000,
-        allowedHosts: [
-            'localhost:9000'
-        ]
+    output: {
+        path: path.resolve(__dirname, './dist'),
+        publicPath: '/dist/',
+        filename: 'build.js'
     },
     module: {
         rules: [
             {
-                test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
+                test: /\.vue$/,
                 use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env']
-                    }
+                    loader: 'vue-loader'
                 }
             },
             {
-                test: /\.vue$/,
-                loader: 'vue-loader'
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader'
+                }
             },
             {
                 test: /\.scss?$/,
@@ -48,10 +43,31 @@ module.exports = {
             path.join(__dirname, 'node_modules'),
         ],
         alias: {
-            // If using the runtime only build
-            // vue$: 'vue/dist/vue.runtime.esm.js' // 'vue/dist/vue.runtime.common.js' for webpack 1
-            // Or if using full build of Vue (runtime + compiler)
-            vue$: 'vue/dist/vue.esm.js'      // 'vue/dist/vue.common.js' for webpack 1
+            'vue$': 'vue/dist/vue.esm.js'
         }
-    }
+    },
+    devServer: {
+        compress: true,
+        historyApiFallback: true,
+        noInfo: false,
+    },
+    devtool: '#eval-source-map'
+}
+
+if (process.env.NODE_ENV === 'production') {
+    module.exports.devtool = '#source-map'
+    // http://vue-loader.vuejs.org/en/workflow/production.html
+    module.exports.plugins = (module.exports.plugins || []).concat([
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: '"production"'
+            }
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        }),
+        new webpack.optimize.OccurrenceOrderPlugin()
+    ])
 }

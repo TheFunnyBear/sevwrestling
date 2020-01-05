@@ -21,7 +21,7 @@
 </template>
 
 <script>
-    import MessagesItem from 'components/messages/MessagesItem.vue'
+    import MessagesItem from "./MessagesItem.vue";
 
     export default {
         props: ['messages', 'totalPages', 'currentPage', 'perPage'],
