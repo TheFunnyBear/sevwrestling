@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Список сообщений</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script th:inline="javascript">
+    </script>
+</head>
+<body>
+
+<div id="newsPage"></div>
+
+<script th:src="${true} ? 'http://localhost:8000/newsPage.js' : '/js/newsPage.js'"></script>
+</body>
+</html>
