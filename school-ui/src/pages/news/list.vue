@@ -7,13 +7,12 @@
 </template>
 
 <script>
-  import MainLayout from '../layouts/Main.vue'
-  import NavigationHeader from '../components/NavigationHeader.vue';
-  import PageHeader from '../components/PageHeader.vue';
-  import PageFooter from '../components/PageFooter.vue';
+  import NavigationHeader from '../../components/NavigationHeader.vue';
+  import PageHeader from '../../components/PageHeader.vue';
+  import PageFooter from '../../components/PageFooter.vue';
 
   export default {
-    components: {MainLayout, NavigationHeader, PageHeader, PageFooter},
+    components: {NavigationHeader, PageHeader, PageFooter},
     data() {
       return {
         isAdminMode: true,

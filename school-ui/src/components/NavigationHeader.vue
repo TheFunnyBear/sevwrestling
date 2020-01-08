@@ -15,60 +15,60 @@
                     <!-- Новости -->
                     <div v-if="isAdminMode">
                         <b-nav-item-dropdown text="Новости">
-                            <VDropDownItem href="list">Просмотр новостей</VDropDownItem>
-                            <VDropDownItem href="add">Добавить новость</VDropDownItem>
-                            <VDropDownItem href="manage">Управление новостями</VDropDownItem>
+                            <b-dropdown-item :to="'news_list'">Просмотр новостей</b-dropdown-item>
+                            <b-dropdown-item :to="'news_add'">Добавить новость</b-dropdown-item>
+                            <b-dropdown-item :to="'news_manage'">Управление новостями</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </div>
                     <div v-else>
-                        <b-nav-item href="#">Новости</b-nav-item>
+                        <b-nav-item :to="'news'">Новости</b-nav-item>
                     </div>
 
                     <!-- Фото -->
                     <div v-if="isAdminMode">
                         <b-nav-item-dropdown text="Фотографии">
-                            <b-dropdown-item href="#">Просмотр фотографий</b-dropdown-item>
-                            <b-dropdown-item href="#">Добавить фотографию в альбом</b-dropdown-item>
-                            <b-dropdown-item href="#">Управление фотографиями</b-dropdown-item>
-                            <b-dropdown-item href="#">Создать альбом фотографий</b-dropdown-item>
-                            <b-dropdown-item href="#">Управление альбомами фотографий</b-dropdown-item>
+                            <b-dropdown-item :to="'photos_list'">Просмотр фотографий</b-dropdown-item>
+                            <b-dropdown-item :to="'photos_add'">Добавить фотографию в альбом</b-dropdown-item>
+                            <b-dropdown-item :to="'photos_manage'">Управление фотографиями</b-dropdown-item>
+                            <b-dropdown-item :to="'photoAlbums_add'">Создать альбом фотографий</b-dropdown-item>
+                            <b-dropdown-item :to="'photoAlbums_manage'">Управление альбомами фотографий</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </div>
                     <div v-else>
-                        <b-nav-item href="#">Фото</b-nav-item>
+                        <b-nav-item :to="'photos'">Фото</b-nav-item>
                     </div>
 
                     <!-- Видео -->
                     <div v-if="isAdminMode">
                         <b-nav-item-dropdown text="Видео">
-                            <b-dropdown-item href="#">Просмотр видео</b-dropdown-item>
-                            <b-dropdown-item href="#">Добавить видео</b-dropdown-item>
+                            <b-dropdown-item :to="'video_list'">Просмотр видео</b-dropdown-item>
+                            <b-dropdown-item :to="'video_add'">Добавить видео</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </div>
                     <div v-else>
-                        <b-nav-item href="#">Видео</b-nav-item>
+                        <b-nav-item :to="'video'">Видео</b-nav-item>
                     </div>
 
                     <!-- Расписание -->
                     <div v-if="isAdminMode">
                         <b-nav-item-dropdown text="Расписание">
-                            <b-dropdown-item href="#">Просмотр расписания</b-dropdown-item>
-                            <b-dropdown-item href="#">Редактировать расписание</b-dropdown-item>
+                            <b-dropdown-item :to="'timeTable_show'">Просмотр расписания</b-dropdown-item>
+                            <b-dropdown-item :to="'timeTable_edit'">Редактировать расписание</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </div>
                     <div v-else>
-                        <b-nav-item href="#">Расписание</b-nav-item>
+                        <b-nav-item :to="'timeTable'">Расписание</b-nav-item>
                     </div>
 
                     <!-- Информациия -->
                     <div v-if="isAdminMode">
                         <b-nav-item-dropdown text="Информациия">
-                            <b-dropdown-item href="#">Просмотр информации</b-dropdown-item>
-                            <b-dropdown-item href="#">Редактировать информацию</b-dropdown-item>
+                            <b-dropdown-item :to="'info_show'">Просмотр информации</b-dropdown-item>
+                            <b-dropdown-item :to="'info_edit'">Редактировать информацию</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </div>
                     <div v-else>
-                        <b-nav-item href="#">Информациия</b-nav-item>
+                        <b-nav-item :to="'info'">Информациия</b-nav-item>
                     </div>
                 </b-navbar-nav>
 
@@ -94,10 +94,7 @@
 </template>
 
 <script>
-    import VDropDownItem from './VDropDownItem.vue';
-
     export default {
-        components: {VDropDownItem},
         props: ['isAdminMode'],
         name: "NavigationHeader"
     }
