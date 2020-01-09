@@ -2,23 +2,21 @@
     <div>
         <b-container>
             <b-row align-v="center" align-h="center">
-                    <b-pagination
-                            v-model="currentPage"
-                            :total-rows="totalPages"
-                            :per-page="perPage"
-                            first-text="Первая"
-                            prev-text="Предыдущая"
-                            next-text="Следующая"
-                            last-text="Последняя"
-                            @input="paginate(currentPage)"
-                    />
+                <b-pagination
+                        v-model="currentPage"
+                        :total-rows="totalPages"
+                        :per-page="perPage"
+                        first-text="Первая"
+                        prev-text="Предыдущая"
+                        next-text="Следующая"
+                        last-text="Последняя"
+                        @input="paginate(currentPage)"
+                />
             </b-row>
         </b-container>
 
         <b-container>
-            <b-row align-v="center" align-h="start">
-                <MessageItem v-for="message in messages" v-bind:key="message.id" :message="message"/>
-            </b-row>
+                <MessageManageItem v-for="message in messages" v-bind:key="message.id" :message="message"/>
         </b-container>
 
         <b-container>
@@ -40,21 +38,21 @@
 </template>
 
 <script>
-    import MessageItem from "./MessageItem.vue";
+    import MessageManageItem from "./MessageManageItem.vue";
 
     export default {
-        name: "MessagesList",
+        name: "MessagesManageList",
         components: {
-            MessageItem
+            MessageManageItem
         },
         data(){
-          return {
-              messages: [],
-              currentPage :1,
-              totalPages :10,
-              perPage: 10
+            return {
+                messages: [],
+                currentPage :1,
+                totalPages :10,
+                perPage: 10
 
-          }
+            }
         },
         created: function () {
             console.log("Create function invoked!");

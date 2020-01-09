@@ -10,13 +10,16 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 Vue.use(VueMoment);
-Vue.use(VueResource)
+Vue.use(VueResource);
+
+Vue.http.options.root = 'http://localhost:9000/api';
 
 // 1. Define route components.
 // These can be imported from other files
 import NewsList from './pages/news/list.vue'
 import NewsAdd from './pages/news/add.vue'
 import NewsManage from './pages/news/manage.vue'
+import NewsShow from './pages/news/show.vue'
 import PhotosList from './pages/photos/list.vue'
 import PhotosAdd from './pages/photos/add.vue'
 import PhotosManage from './pages/photos/manage.vue'
@@ -41,6 +44,7 @@ const routes = [
   { path: '/news_list', component: NewsList },
   { path: '/news_add', component: NewsAdd },
   { path: '/news_manage', component: NewsManage },
+  { path: '/news_show/:id', component: NewsShow },
     /* Фотографии */
   { path: '/photos', component: PhotosList },
   { path: '/photos_list', component: PhotosList },

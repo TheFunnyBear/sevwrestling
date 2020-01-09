@@ -11,7 +11,7 @@
   import NavigationHeader from '../../components/NavigationHeader.vue';
   import PageHeader from '../../components/PageHeader.vue';
   import PageFooter from '../../components/PageFooter.vue';
-  import MessagesList from '../../components/MessagesList.vue';
+  import MessagesList from '../../components/messages/MessagesList.vue';
 
   export default {
     components: {NavigationHeader, PageHeader, PageFooter, MessagesList},

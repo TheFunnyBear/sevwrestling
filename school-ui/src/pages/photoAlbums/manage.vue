@@ -2,6 +2,7 @@
   <div>
     <NavigationHeader :isAdminMode="isAdminMode"></NavigationHeader>
     <PageHeader :pageTitle="pageTitle" :pageDescription="pageDescription"/>
+    <PhotoAlbumManageList/>
     <PageFooter/>
   </div>
 </template>
@@ -10,9 +11,10 @@
   import NavigationHeader from '../../components/NavigationHeader.vue';
   import PageHeader from '../../components/PageHeader.vue';
   import PageFooter from '../../components/PageFooter.vue';
+  import PhotoAlbumManageList from '../../components/photoAlbums/PhotoAlbumManageList.vue'
 
   export default {
-    components: {NavigationHeader, PageHeader, PageFooter},
+    components: {NavigationHeader, PageHeader, PageFooter, PhotoAlbumManageList},
     data() {
       return {
         isAdminMode: true,
