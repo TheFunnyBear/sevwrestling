@@ -35,8 +35,12 @@ module.exports = {
     }
   },
   devServer: {
+    port: 8000,
+    allowedHosts: [
+      'localhost:9000'
+    ],
     historyApiFallback: true,
-    noInfo: true
+    noInfo: false
   },
   devtool: '#eval-source-map'
 }

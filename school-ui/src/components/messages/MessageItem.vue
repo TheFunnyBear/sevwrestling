@@ -15,17 +15,26 @@
             <b-card-text>
                 <i>{{message.messageText}}</i>
                 <div>picture uuid: {{message.pictureUuid}}</div>
-                <b-button href="#" variant="primary">Go somewhere</b-button>
+                <b-button :to="'news_show/'+ message.id" variant="primary">Подробнее...</b-button>
             </b-card-text>
 
-            <b-card-footer>Дата: {{message.publicationDate}}</b-card-footer>
+            <b-card-footer>Дата: {{convertToHumanTime(message.publicationDate)}}</b-card-footer>
         </b-card>
     </b-col>
 </template>
 
 <script>
+    import moment from 'moment';
+
     export default {
-        props: ['message']
+        name: "MessageItem",
+        props: ['message'],
+        methods: {
+            convertToHumanTime: function (publicationDate) {
+                const messageTime = new moment(publicationDate);
+                return moment.utc(messageTime).format("DD-MM-YYYY");
+            }
+        }
     }
 </script>
 

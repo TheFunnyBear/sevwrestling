@@ -13,9 +13,9 @@ import org.springframework.data.domain.Pageable
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
-
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = ["*"], allowedHeaders = ["*"])
 class MessagesController (private val repository: MessagesRepository){
     private val log = LoggerFactory.getLogger(Application::class.java)
 
@@ -113,7 +113,7 @@ class MessagesController (private val repository: MessagesRepository){
     /**
      * Удаляем сообщение
      */
-    @PutMapping("/message/delete/{id}")
+    @DeleteMapping("/message/delete/{id}")
     fun delete(@PathVariable id: Long)
     {
         log.info("Удаление сообщения.")
