@@ -1,16 +1,21 @@
 import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
+import IconsPlugin from 'bootstrap-vue'
 import VueRouter from 'vue-router'
 import VueMoment from 'vue-moment'
 import VueResource from 'vue-resource'
+import VueLayers from 'vuelayers'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'vuelayers/lib/style.css'
 
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
+Vue.use(IconsPlugin);
 Vue.use(VueMoment);
 Vue.use(VueResource);
+Vue.use(VueLayers);
 
 Vue.http.options.root = 'http://localhost:9000/api';
 
