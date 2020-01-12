@@ -15,9 +15,9 @@
                     <!-- Новости -->
                     <div v-if="isAdminMode">
                         <b-nav-item-dropdown text="Новости">
-                            <b-dropdown-item :to="'news_list'">Просмотр новостей</b-dropdown-item>
-                            <b-dropdown-item :to="'news_add'">Добавить новость</b-dropdown-item>
-                            <b-dropdown-item :to="'news_manage'">Управление новостями</b-dropdown-item>
+                            <b-dropdown-item :to="'/news_list'">Просмотр новостей</b-dropdown-item>
+                            <b-dropdown-item :to="'/news_add'">Добавить новость</b-dropdown-item>
+                            <b-dropdown-item :to="'/news_manage'">Управление новостями</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </div>
                     <div v-else>
@@ -27,11 +27,11 @@
                     <!-- Фото -->
                     <div v-if="isAdminMode">
                         <b-nav-item-dropdown text="Фотографии">
-                            <b-dropdown-item :to="'photos_list'">Просмотр фотографий</b-dropdown-item>
-                            <b-dropdown-item :to="'photos_add'">Добавить фотографию в альбом</b-dropdown-item>
-                            <b-dropdown-item :to="'photos_manage'">Управление фотографиями</b-dropdown-item>
-                            <b-dropdown-item :to="'photoAlbums_add'">Создать альбом фотографий</b-dropdown-item>
-                            <b-dropdown-item :to="'photoAlbums_manage'">Управление альбомами фотографий</b-dropdown-item>
+                            <b-dropdown-item :to="'/photos_list'">Просмотр фотографий</b-dropdown-item>
+                            <b-dropdown-item :to="'/photos_add'">Добавить фотографию в альбом</b-dropdown-item>
+                            <b-dropdown-item :to="'/photos_manage'">Управление фотографиями</b-dropdown-item>
+                            <b-dropdown-item :to="'/photoAlbums_add'">Создать альбом фотографий</b-dropdown-item>
+                            <b-dropdown-item :to="'/photoAlbums_manage'">Управление альбомами фотографий</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </div>
                     <div v-else>
@@ -41,8 +41,8 @@
                     <!-- Видео -->
                     <div v-if="isAdminMode">
                         <b-nav-item-dropdown text="Видео">
-                            <b-dropdown-item :to="'video_list'">Просмотр видео</b-dropdown-item>
-                            <b-dropdown-item :to="'video_add'">Добавить видео</b-dropdown-item>
+                            <b-dropdown-item :to="'/video_list'">Просмотр видео</b-dropdown-item>
+                            <b-dropdown-item :to="'/video_add'">Добавить видео</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </div>
                     <div v-else>
@@ -52,8 +52,8 @@
                     <!-- Расписание -->
                     <div v-if="isAdminMode">
                         <b-nav-item-dropdown text="Расписание">
-                            <b-dropdown-item :to="'timeTable_show'">Просмотр расписания</b-dropdown-item>
-                            <b-dropdown-item :to="'timeTable_edit'">Редактировать расписание</b-dropdown-item>
+                            <b-dropdown-item :to="'/timeTable_show'">Просмотр расписания</b-dropdown-item>
+                            <b-dropdown-item :to="'/timeTable_edit'">Редактировать расписание</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </div>
                     <div v-else>
@@ -63,12 +63,12 @@
                     <!-- Информациия -->
                     <div v-if="isAdminMode">
                         <b-nav-item-dropdown text="Информациия">
-                            <b-dropdown-item :to="'info_show'">Просмотр информации</b-dropdown-item>
-                            <b-dropdown-item :to="'info_edit'">Редактировать информацию</b-dropdown-item>
+                            <b-dropdown-item :to="'/info_show'">Просмотр информации</b-dropdown-item>
+                            <b-dropdown-item :to="'/info_edit'">Редактировать информацию</b-dropdown-item>
                         </b-nav-item-dropdown>
                     </div>
                     <div v-else>
-                        <b-nav-item :to="'info'">Информациия</b-nav-item>
+                        <b-nav-item :to="'/info'">Информациия</b-nav-item>
                     </div>
                 </b-navbar-nav>
 

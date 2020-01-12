@@ -11,8 +11,8 @@
 
             <div class="mt-3">
                 <b-button-group>
-                    <b-button :to="'news_show/'+ message.id"  variant="info">Просмотреть</b-button>
-                    <b-button variant="warning">Редактировать</b-button>
+                    <b-button :to="'news_show/'+ message.id" variant="info">Просмотреть</b-button>
+                    <b-button :to="'news_edit/'+ message.id" variant="warning">Редактировать</b-button>
                     <b-button variant="danger">Удалить</b-button>
                 </b-button-group>
             </div>

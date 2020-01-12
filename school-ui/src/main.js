@@ -23,6 +23,7 @@ Vue.http.options.root = 'http://localhost:9000/api';
 // These can be imported from other files
 import NewsList from './pages/news/list.vue'
 import NewsAdd from './pages/news/add.vue'
+import NewsEdit from './pages/news/edit.vue'
 import NewsManage from './pages/news/manage.vue'
 import NewsShow from './pages/news/show.vue'
 import PhotosList from './pages/photos/list.vue'
@@ -48,6 +49,7 @@ const routes = [
   { path: '/news', component: NewsList },
   { path: '/news_list', component: NewsList },
   { path: '/news_add', component: NewsAdd },
+  { path: '/news_edit/:id', component: NewsEdit },
   { path: '/news_manage', component: NewsManage },
   { path: '/news_show/:id', component: NewsShow },
     /* Фотографии */
