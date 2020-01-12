@@ -33,3 +33,4 @@ out/
 
 ### Node modules ###
 node_modules
+/upload/
