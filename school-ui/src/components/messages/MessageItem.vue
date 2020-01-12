@@ -27,7 +27,7 @@
     import moment from 'moment';
 
     export default {
-        name: "MessageItem",
+        name: "message-item",
         props: ['message'],
         methods: {
             convertToHumanTime: function (publicationDate) {

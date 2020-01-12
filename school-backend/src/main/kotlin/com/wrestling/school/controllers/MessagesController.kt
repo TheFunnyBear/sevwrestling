@@ -7,15 +7,18 @@ import com.wrestling.school.repositories.MessagesRepository
 import javafx.application.Application
 import org.mapstruct.factory.Mappers
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = ["*"], allowedHeaders = ["*"])
+//@CrossOrigin(origins = ["*"], allowedHeaders = ["*"])
+@CrossOrigin(origins = ["http://localhost:8000"], maxAge = 4800, allowCredentials = "false")
 class MessagesController (private val repository: MessagesRepository){
     private val log = LoggerFactory.getLogger(Application::class.java)
 
@@ -38,10 +41,12 @@ class MessagesController (private val repository: MessagesRepository){
 
     /**
      * Возвращает пагинированный список с 10-ю элементами для страницы
+     * Сортировка по убыванию идентификатора
      */
     @GetMapping("/messages/{page}")
     fun getPage(@PathVariable page: Int): Page<MessageModel> {
-        val currentPageWithTenMessages: Pageable = PageRequest.of(page, 10);
+        val currentPageWithTenMessages: Pageable = PageRequest.of(page, 10, Sort
+                .by(Sort.Direction.DESC, "id"));
         return repository.findAll(currentPageWithTenMessages).map {
             messageDto -> MessageModel(
                 messageDto.id,
@@ -79,8 +84,19 @@ class MessagesController (private val repository: MessagesRepository){
     fun create(@RequestBody message :MessageModel) {
         log.info("Создание нового сообщения.")
 
-        val converter = Mappers.getMapper(MessageConverter::class.java)
-        val messageDto = converter.convertToDto(message);
+        //val converter = Mappers.getMapper(MessageConverter::class.java) // or PersonConverterImpl()
+        val messageDto = MessageDto(
+                message.id,
+                message.createdDate,
+                message.publicationDate,
+                message.messageTitle,
+                message.messageText,
+                message.pictureUuid,
+                message.isDeleted
+        );
+
+
+        //val messageDto = converter.convertToDto(message);
         repository.save(messageDto);
 
         log.info("Создание созданно.")
@@ -89,21 +105,33 @@ class MessagesController (private val repository: MessagesRepository){
     /**
      * Обновляем сообщение
      */
-    @PutMapping("/message/update/{id}")
+    @PostMapping("/message/update/{id}")
     fun update(@PathVariable id: Long, @RequestBody message :MessageModel) : ResponseEntity<MessageModel>
     {
         val existingMessage = repository.findById(id);
         if(existingMessage != null) {
-            var existingMessageDto: MessageDto = existingMessage as MessageDto
-            var updateMessageDto =  existingMessageDto.copy(messageTitle = message.messageTitle)
+            var existingMessageDto: MessageDto = existingMessage.get()
+            var updateMessageDto =  existingMessageDto.copy(
+                    publicationDate = message.publicationDate,
+                    messageTitle = message.messageTitle,
+                    messageText = message.messageText
+            )
 
             val result = repository.save(updateMessageDto);
 
             if (result != null) {
-                val converter = Mappers.getMapper(MessageConverter::class.java)
-                val messageModel = converter.convertToModel(result);
+                //val converter = Mappers.getMapper(MessageConverter::class.java)
+                //val messageModel = converter.convertToModel(result);
 
-                return ResponseEntity.ok(messageModel);
+                return ResponseEntity.ok(MessageModel(
+                        result.id,
+                        result.createdDate,
+                        result.publicationDate,
+                        result.messageTitle,
+                        result.messageText,
+                        result.pictureUuid,
+                        result.isDeleted
+                ));
             }
         }
 
