@@ -20,7 +20,7 @@
                 >
                   <b-form-input
                           id="input-1"
-                          v-model="form.title"
+                          v-model="form.photoAlbumTitle"
                           type="text"
                           required
                           placeholder="Укажите тут название альбома"
@@ -31,7 +31,7 @@
                 <b-form-group id="input-group-2" label="Описание альбома:" label-for="input-2">
                   <b-form-textarea
                           id="input-2"
-                          v-model="form.description"
+                          v-model="form.photoAlbumDescription"
                           rows="5"
                           max-rows="6"
                           placeholder="Укажите тут описание для альбома"
@@ -67,9 +67,24 @@
     data() {
       return {
         form: {
-          comment: '',
-          photoFile: null,
-          selectedAlbum: null,
+          photoAlbumTitle: '',
+          photoAlbumDescription: ''
+        },
+        PhotoAlbumModel : {
+          /**
+           * Идентификатор фотоальбома
+           */
+          id: 0,
+
+          /**
+           * Заголовок фотоальбома
+           */
+          photoAlbumTitle: '',
+
+          /**
+           * Описание фотоальбома
+           */
+          photoAlbumDescription: ''
         },
         isAdminMode: true,
         pageTitle: 'Добавить альбом для фотографий',
@@ -82,19 +97,26 @@
         console.log("OnSubmit function invoked!");
         evt.preventDefault();
 
-        alert(JSON.stringify(this.form))
+        this.PhotoAlbumModel.photoAlbumTitle = this.form.photoAlbumTitle;
+        this.PhotoAlbumModel.photoAlbumDescription = this.form.photoAlbumDescription;
 
-        console.log("OnSubmit function completed.");
+        let url = `photoAlbum/create/`;
+        this.$http.post(url, JSON.stringify( this.PhotoAlbumModel)).then(response => {
+          console.log("Post response completed with status:", response.status);
+          this.$router.push('/photoAlbums_manage');
+        }, response => {
+          // error callback
+        });
       },
 
       onReset(evt) {
         console.log("OnReset function invoked!");
         evt.preventDefault();
         // Reset our form values
-        this.form.comment = '';
-        this.form.photoFile = '';
-        this.form.selectedAlbum = null;
-
+        this.form.title = '';
+        this.form.description = '';
+        this.form.photoFile = null;
+        this.form.checked = [];
         // Trick to reset/clear native browser form validation state
         this.show = false;
         this.$nextTick(() => {

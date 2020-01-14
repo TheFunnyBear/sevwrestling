@@ -10,13 +10,14 @@ import org.springframework.core.io.UrlResource
 import org.springframework.stereotype.Service
 import org.springframework.util.StringUtils
 import org.springframework.web.multipart.MultipartFile
+import java.io.File
 import java.io.IOException
 import java.net.MalformedURLException
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
-
+import java.util.*
 
 @Service
 class FileStorageService  (private val fileStorageProperties: FileStorageProperties) {
@@ -29,14 +30,35 @@ class FileStorageService  (private val fileStorageProperties: FileStoragePropert
         val fileName = StringUtils.cleanPath(file.originalFilename!!)
         return try { // Check if the file's name contains invalid characters
             if (fileName.contains("..")) {
-                throw FileStorageException("Sorry! Filename contains invalid path sequence $fileName")
+                throw FileStorageException("К сожалению! Имя файла содержит неверную последовательность путей $fileName")
             }
             // Copy file to the target location (Replacing existing file with the same name)
             val targetLocation = fileStorageLocation.resolve(fileName)
             Files.copy(file.inputStream, targetLocation, StandardCopyOption.REPLACE_EXISTING)
-            fileName
+
+            return fileName
         } catch (ex: IOException) {
-            throw FileStorageException("Could not store file $fileName. Please try again!", ex)
+            throw FileStorageException("Не удалось сохранить файл $fileName. Пожалуйста, попробуйте еще раз!", ex)
+        }
+    }
+
+    fun storeFile(file: MultipartFile, fileUuid: UUID?): UniqFileStorage {
+        val fileName = StringUtils.cleanPath(file.originalFilename!!)
+        return try { // Check if the file's name contains invalid characters
+            if (fileName.contains("..")) {
+                throw FileStorageException("К сожалению! Имя файла содержит неверную последовательность путей $fileName")
+            }
+
+            val originalFileExtension = File(fileName).extension
+            val newFileName = fileUuid.toString() + ".$originalFileExtension"
+
+            val targetLocation = fileStorageLocation.resolve(newFileName)
+            Files.copy(file.inputStream, targetLocation, StandardCopyOption.REPLACE_EXISTING)
+
+            return UniqFileStorage(fileName, newFileName)
+
+        } catch (ex: IOException) {
+            throw FileStorageException("Не удалось сохранить файл $fileName. Пожалуйста, попробуйте еще раз!", ex)
         }
     }
 
@@ -47,10 +69,10 @@ class FileStorageService  (private val fileStorageProperties: FileStoragePropert
             if (resource.exists()) {
                 resource
             } else {
-                throw MyFileNotFoundException("File not found $fileName")
+                throw MyFileNotFoundException("Файл не найден $fileName")
             }
         } catch (ex: MalformedURLException) {
-            throw MyFileNotFoundException("File not found $fileName", ex)
+            throw MyFileNotFoundException("Файл не найден $fileName", ex)
         }
     }
 
@@ -60,7 +82,7 @@ class FileStorageService  (private val fileStorageProperties: FileStoragePropert
             log.info("FileStorageService fileStorageLocation is:[$fileStorageLocation]")
             Files.createDirectories(fileStorageLocation)
         } catch (ex: Exception) {
-            throw FileStorageException("Could not create the directory where the uploaded files will be stored.", ex)
+            throw FileStorageException("Не удалось создать каталог, в котором будут храниться загруженные файлы.", ex)
         }
     }
 }

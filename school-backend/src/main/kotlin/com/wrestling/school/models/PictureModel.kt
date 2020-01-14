@@ -1,11 +1,11 @@
 package com.wrestling.school.models
 
-import java.util.*
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 
 /**
  * Изображение
  */
-data class PictureModel (
+class PictureModel (
         /**
          * Идентификатор изображения
          */
@@ -14,17 +14,17 @@ data class PictureModel (
         /**
          * Уникальны идентификатор изображения
          */
-        val pictureUuid: UUID,
+        val pictureUuid: String,
 
         /**
-         * Имя файла
+         * Идентификатор фотоальбома
          */
-        val fileName: String,
+        val photoAlbumId: Long,
 
         /**
-         * Размер файла в байтах
+         *  Уникальное имя файла
          */
-        val fileSize: Long,
+        val uniqFileName: String,
 
         /**
          * Коментарий к файлу
@@ -35,4 +35,16 @@ data class PictureModel (
          * Файл удалён
          */
         val isDeleted: Boolean
-)
+) {
+        /**
+         * Строка для загрузки
+         */
+        val pictureDownloadUri: String
+                get() {
+                        return ServletUriComponentsBuilder.fromCurrentContextPath()
+                                .path("/api/files/downloadFile/")
+                                .path(uniqFileName)
+                                .toUriString()
+                }
+
+}

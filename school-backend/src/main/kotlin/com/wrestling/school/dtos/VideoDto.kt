@@ -7,10 +7,10 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 
 /**
- *
+ * Видео файл
  */
 @Entity
-data class VideoResource (
+data class VideoDto (
         /**
          * Идентификатор видео
          */

@@ -5,7 +5,7 @@ import java.util.*
 /**
  * Видео
  */
-data class VideoModel (
+class VideoModel (
         /**
          * Идентификатор видео
          */
