@@ -2,14 +2,7 @@
   <div>
     <NavigationHeader :isAdminMode="isAdminMode"></NavigationHeader>
     <PageHeader :pageTitle="pageTitle" :pageDescription="pageDescription"/>
-    <div>
-      <b-embed
-              type="iframe"
-              aspect="16by9"
-              src="https://www.sevwrestling.ru/VideoFileUpload/WrestlingDaySimferopolSound848_480.mp4"
-              allowfullscreen
-      ></b-embed>
-    </div>
+    <VideoList/>
     <PageFooter/>
   </div>
 </template>
@@ -18,9 +11,10 @@
   import NavigationHeader from '../../components/NavigationHeader.vue';
   import PageHeader from '../../components/PageHeader.vue';
   import PageFooter from '../../components/PageFooter.vue';
+  import VideoList from "../../components/video/VideoList.vue";
 
   export default {
-    components: {NavigationHeader, PageHeader, PageFooter},
+    components: {NavigationHeader, PageHeader, PageFooter, VideoList},
     data() {
       return {
         isAdminMode: true,

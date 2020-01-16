@@ -50,7 +50,7 @@
         },
         created: function () {
             console.log("Create function invoked!");
-            var id = this.$route.params.id;
+            let id = this.$route.params.id;
 
             let url = `message/${id}/`;
             this.$http.get(url).then(result =>

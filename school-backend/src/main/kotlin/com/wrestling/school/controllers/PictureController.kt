@@ -1,6 +1,5 @@
 package com.wrestling.school.controllers
 
-import antlr.build.ANTLR.root
 import com.wrestling.school.dtos.PictureDto
 import com.wrestling.school.models.PictureModel
 import com.wrestling.school.repositories.PictureRepository
@@ -12,13 +11,11 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.util.*
-import javax.persistence.criteria.Predicate
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = ["*"], allowedHeaders = ["*"])
+@CrossOrigin(origins = ["http://localhost:8000"], maxAge = 4800, allowCredentials = "false")
 class PictureController (private val repository: PictureRepository) {
     private val log = LoggerFactory.getLogger(Application::class.java)
 
@@ -37,6 +34,24 @@ class PictureController (private val repository: PictureRepository) {
                     pictureDto.fileComment,
                     pictureDto.isDeleted)
         }
+    }
+
+    /**
+     * Возвращает фотографию по её идентификатору
+     */
+    @GetMapping("/picture/{id}")
+    fun findById(@PathVariable id: Long): ResponseEntity<PictureModel>? {
+
+        return repository.findById(id).map {
+            ResponseEntity.ok(PictureModel(
+                    it.id,
+                    it.pictureUuid.toString(),
+                    it.photoAlbumId,
+                    it.uniqFileName,
+                    it.fileComment,
+                    it.isDeleted
+            ))
+        }.orElseGet { ResponseEntity.notFound().build() }
     }
 
     /**
@@ -65,8 +80,7 @@ class PictureController (private val repository: PictureRepository) {
     @GetMapping("/photoAlbumPictures/{id}")
     fun findAllInPhotoAlbumId(@PathVariable id: Long): List<PictureModel> {
 
-        return repository.findByPhotoAlbumId(id)?.map {
-            pictureDto ->
+        return repository.findByPhotoAlbumId(id).map { pictureDto ->
             PictureModel(
                     pictureDto.id,
                     pictureDto.pictureUuid.toString(),
@@ -74,7 +88,7 @@ class PictureController (private val repository: PictureRepository) {
                     pictureDto.uniqFileName,
                     pictureDto.fileComment,
                     pictureDto.isDeleted)
-        }!!
+        }
     }
 
     /**
@@ -103,23 +117,23 @@ class PictureController (private val repository: PictureRepository) {
     /**
      * Обновляем фотоальбом
      */
-    @PutMapping("/pictures/update/{id}")
+    @PostMapping("/pictures/update/{id}")
     fun update(@PathVariable id: Long, @RequestBody pictureModel : PictureModel) : ResponseEntity<PictureModel>
     {
         log.info("Обновляем фотографию.")
 
         val existingPhoto = repository.findById(id)
-        var existingPictureDto: PictureDto = existingPhoto.get()
+        val existingPictureDto: PictureDto = existingPhoto.get()
 
-        var updatePictureDto =  existingPictureDto.copy(
+        val updatePictureDto =  existingPictureDto.copy(
                 pictureUuid = UUID.fromString(pictureModel.pictureUuid),
                 photoAlbumId = pictureModel.photoAlbumId,
+                uniqFileName = pictureModel.uniqFileName,
                 fileComment = pictureModel.fileComment,
                 isDeleted = pictureModel.isDeleted
         )
 
         val result = repository.save(updatePictureDto)
-
 
         return ResponseEntity.ok(PictureModel(
                 result.id,
@@ -143,5 +157,4 @@ class PictureController (private val repository: PictureRepository) {
 
         log.info("Фотоальбом удалён.")
     }
-
 }

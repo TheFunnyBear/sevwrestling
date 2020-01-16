@@ -68,7 +68,7 @@
                 <CommentForControl
                         :showFirstMessage=Boolean(form.photoFile)
                         :firstMessage="'Выбран файл с фотографией:'"
-                        :firstMessagePostfix=form.photoFile
+                        :firstMessagePostfix=getPhotoFileName()
                         :secondMessage = "'Файл с фотографией не выбран.'">
                 </CommentForControl>
               </b-form-group>
@@ -166,15 +166,7 @@
       onSubmit(evt) {
         console.log("OnSubmit function invoked!");
         evt.preventDefault();
-
         this.uploadFile();
-        /*
-                        .then(response => {
-                          console.log("Post response completed with status:", response.status);
-                          this.$router.push('/news_list');
-
-        */
-
         console.log("OnSubmit function completed.");
       },
 
@@ -217,8 +209,6 @@
           console.log("File was not uploaded not sending data");
           // error callback
         });
-
-        return result;
       },
 
       sendData: function () {
@@ -233,11 +223,20 @@
         let url = `pictures/create/`;
         this.$http.post(url, JSON.stringify(this.PictureModel)).then(response => {
           console.log("Post response completed with status:", response.status);
-          this.$router.push('/news_list');
+          this.$router.push('/photos_manage');
         }, response => {
           // error callback
         });
+      },
+
+      getPhotoFileName: function() {
+        if (this.form.photoFile != null)
+        {
+          return this.form.photoFile.name;
+        }
+        return '';
       }
+
     }
 
   }

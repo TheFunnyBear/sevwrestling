@@ -24,14 +24,9 @@ data class VideoDto (
         val videoUuid: UUID = UUID.randomUUID(),
 
         /**
-         * Имя файла
+         *  Уникальное имя файла
          */
-        val fileName: String = "",
-
-        /**
-         * Размер файла в байтах
-         */
-        val fileSize: Long = 0,
+        val uniqFileName: String = "",
 
         /**
          * Коментарий к файлу

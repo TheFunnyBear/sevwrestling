@@ -9,8 +9,8 @@
 
             <div class="mt-3">
                 <b-button-group>
-                    <b-button :to="'news_show/'+ photoAlbum.id"  variant="info">Просмотреть фотоальбом</b-button>
-                    <b-button variant="warning">Редактировать</b-button>
+                    <b-button :to="'/photos_list/'+ photoAlbum.id"  variant="info">Просмотреть фотоальбом</b-button>
+                    <b-button :to="'/photoAlbums_edit/'+ photoAlbum.id" variant="warning">Редактировать</b-button>
                     <b-button variant="danger">Удалить</b-button>
                 </b-button-group>
             </div>

@@ -42,47 +42,6 @@
         </b-row>
       </b-container>
     </div>
-<!--
-    <b-container fluid class="p-4 bg-dark">
-      <b-row>
-        <b-col>
-          <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=54" alt="Image 1"></b-img>
-        </b-col>
-        <b-col>
-          <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=58" alt="Image 2"></b-img>
-        </b-col>
-        <b-col>
-          <b-img thumbnail fluid src="https://picsum.photos/250/250/?image=59" alt="Image 3"></b-img>
-        </b-col>
-        <b-col>
-          <b-img-lazy v-bind="mainProps" :src="getImageUrl(80)" alt="Image 1"></b-img-lazy>
-        </b-col>
-        <b-col>
-          <b-img-lazy v-bind="mainProps" :src="getImageUrl(82)" alt="Image 2"></b-img-lazy>
-        </b-col>
-        <b-col>
-          <b-img-lazy v-bind="mainProps" :src="getImageUrl(84)" alt="Image 3"></b-img-lazy>
-        </b-col>
-        <b-col>
-          <b-img-lazy v-bind="mainProps" :src="getImageUrl(85)" alt="Image 4"></b-img-lazy>
-        </b-col>
-        <b-col>
-          <b-img-lazy v-bind="mainProps" :src="getImageUrl(88)" alt="Image 5"></b-img-lazy>
-        </b-col>
-        <b-col>
-          <b-img-lazy v-bind="mainProps" :src="getImageUrl(90)" alt="Image 6"></b-img-lazy>
-        </b-col>
-        <b-col>
-          <b-img-lazy v-bind="mainProps" :src="getImageUrl(92)" alt="Image 7"></b-img-lazy>
-        </b-col>
-        <b-col>
-          <b-img-lazy v-bind="mainProps" :src="getImageUrl(94)" alt="Image 8"></b-img-lazy>
-        </b-col>
-
-      </b-row>
-
-    </b-container>
-      -->
     <PageFooter/>
   </div>
 </template>
@@ -127,14 +86,44 @@
                                   value: photoAlbumModel.id,
                                   text: photoAlbumModel.photoAlbumDescription
                                 }));
+
+                        if(this.$route != null && this.$route.params != null && this.$route.params.id != null) {
+                          console.info("Route specified");
+                          let id = this.$route.params.id;
+                          if (id > 0) {
+                            this.selectedAlbum = id;
+                          }
+                        }
+                        else {
+                          console.info("Route not specified. Try to select first album.");
+                          if (this.options.length > 0) {
+                            console.info("Route not specified. Albums count is:", this.options.length);
+                            this.selectedAlbum = this.options[0].value;
+                          }
+                        }
+                        this.loadPicturesInSelectedAlbum();
+                        this.refreshView();
                       }
+
               )
       )
     },
     methods: {
-      getImageUrl(imageId) {
-        const {width, height} = this.mainProps;
-        return `https://picsum.photos/${width}/${height}/?image=${imageId}`
+      selectAlbum: function() {
+        if(this.$route != null && this.$route.params != null && this.$route.params.id != null) {
+          console.info("Route specified");
+          let id = this.$route.params.id;
+          if (id > 0) {
+            this.selectedAlbum = id;
+          }
+        }
+        else {
+          console.info("Route not specified. Try to select first album.");
+          if (this.options.count > 0) {
+            console.info("Route not specified. Albums count is:", this.options.count);
+            this.selectedAlbum = this.options[0].value;
+          }
+        }
       },
 
       loadPicturesInSelectedAlbum: function() {

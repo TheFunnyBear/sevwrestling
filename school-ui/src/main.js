@@ -28,8 +28,11 @@ import NewsManage from './pages/news/manage.vue'
 import NewsShow from './pages/news/show.vue'
 import PhotosList from './pages/photos/list.vue'
 import PhotosAdd from './pages/photos/add.vue'
+import PhotosShow from './pages/photos/show.vue'
+import PhotosEdit from './pages/photos/edit.vue'
 import PhotosManage from './pages/photos/manage.vue'
 import PhotoAlbumsAdd from './pages/photoAlbums/add.vue'
+import PhotoAlbumsEdit from './pages/photoAlbums/edit.vue'
 import PhotoAlbumsManage from './pages/photoAlbums/manage.vue'
 import VideoList from './pages/video/list.vue'
 import VideoAdd from './pages/video/add.vue'
@@ -55,9 +58,13 @@ const routes = [
     /* Фотографии */
   { path: '/photos', component: PhotosList },
   { path: '/photos_list', component: PhotosList },
+  { path: '/photos_list/:id', component: PhotosList },
   { path: '/photos_add', component: PhotosAdd },
+  { path: '/photos_show/:id', component: PhotosShow },
+  { path: '/photos_edit/:id', component: PhotosEdit },
   { path: '/photos_manage', component: PhotosManage },
   { path: '/photoAlbums_add', component: PhotoAlbumsAdd },
+  { path: '/photoAlbums_edit/:id', component: PhotoAlbumsEdit },
   { path: '/photoAlbums_manage', component: PhotoAlbumsManage },
     /* Видео */
   { path: '/video', component: VideoList },

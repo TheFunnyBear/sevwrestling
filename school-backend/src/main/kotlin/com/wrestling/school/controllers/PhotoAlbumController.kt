@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = ["*"], allowedHeaders = ["*"])
+@CrossOrigin(origins = ["http://localhost:8000"], maxAge = 4800, allowCredentials = "false")
 class PhotoAlbumController (private val repository: PhotoAlbumRepository) {
     private val log = LoggerFactory.getLogger(Application::class.java)
 
@@ -86,7 +86,7 @@ class PhotoAlbumController (private val repository: PhotoAlbumRepository) {
     /**
      * Обновляем фотоальбом
      */
-    @PutMapping("/photoAlbum/update/{id}")
+    @PostMapping("/photoAlbum/update/{id}")
     fun update(@PathVariable id: Long, @RequestBody photoAlbum : PhotoAlbumModel) : ResponseEntity<PhotoAlbumModel>
     {
         log.info("Обновляем фотоальбом.")
