@@ -1,21 +1,20 @@
 package com.wrestling.school.controllers
 
 import com.wrestling.school.dtos.PhotoAlbumDto
-import com.wrestling.school.mappers.PhotoAlbumConverter
 import com.wrestling.school.models.PhotoAlbumModel
 import com.wrestling.school.repositories.PhotoAlbumRepository
 import javafx.application.Application
-import org.mapstruct.factory.Mappers
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = ["*"], allowedHeaders = ["*"])
+@CrossOrigin(origins = ["http://localhost:8000"], maxAge = 4800, allowCredentials = "false")
 class PhotoAlbumController (private val repository: PhotoAlbumRepository) {
     private val log = LoggerFactory.getLogger(Application::class.java)
 
@@ -38,7 +37,9 @@ class PhotoAlbumController (private val repository: PhotoAlbumRepository) {
      */
     @GetMapping("/photoAlbums/{page}")
     fun getPage(@PathVariable page: Int): Page<PhotoAlbumModel> {
-        val currentPageWithTenMessages: Pageable = PageRequest.of(page, 10)
+        val currentPageWithTenMessages: Pageable = PageRequest.of(page, 10, Sort
+                .by(Sort.Direction.DESC, "id"))
+
         return repository.findAll(currentPageWithTenMessages).map {
             photoAlbumDto ->
             PhotoAlbumModel(
@@ -69,33 +70,49 @@ class PhotoAlbumController (private val repository: PhotoAlbumRepository) {
     fun create(@RequestBody photoAlbum : PhotoAlbumModel) {
         log.info("Создание нового фотоальбома.")
 
-        val converter = Mappers.getMapper(PhotoAlbumConverter::class.java)
-        val photoAlbumDto = converter.convertToDto(photoAlbum)
-        repository.save(photoAlbumDto)
+        //val converter = Mappers.getMapper(PhotoAlbumConverter::class.java)
+        //val photoAlbumDto = converter.convertToDto(photoAlbum)
 
+        val photoAlbumDto = PhotoAlbumDto(
+                photoAlbum.id,
+                photoAlbum.photoAlbumTitle,
+                photoAlbum.photoAlbumDescription
+        )
+
+        repository.save(photoAlbumDto)
         log.info("Фотоальбом создан.")
     }
 
     /**
      * Обновляем фотоальбом
      */
-    @PutMapping("/photoAlbum/update/{id}")
+    @PostMapping("/photoAlbum/update/{id}")
     fun update(@PathVariable id: Long, @RequestBody photoAlbum : PhotoAlbumModel) : ResponseEntity<PhotoAlbumModel>
     {
         log.info("Обновляем фотоальбом.")
 
         val existingPhotoAlbum = repository.findById(id)
         if(existingPhotoAlbum != null) {
-            var existingPhotoAlbumDto: PhotoAlbumDto = existingPhotoAlbum as PhotoAlbumDto
-            var updatePhotoAlbumDto =  existingPhotoAlbumDto.copy(photoAlbumTitle = photoAlbum.photoAlbumTitle)
+            var existingPhotoAlbumDto: PhotoAlbumDto = existingPhotoAlbum.get()
+
+
+            var updatePhotoAlbumDto =  existingPhotoAlbumDto.copy(
+                    photoAlbumTitle = photoAlbum.photoAlbumTitle,
+                    photoAlbumDescription =photoAlbum.photoAlbumDescription
+            )
 
             val result = repository.save(updatePhotoAlbumDto)
 
             if (result != null) {
-                val converter = Mappers.getMapper(PhotoAlbumConverter::class.java)
-                val photoAlbumModel = converter.convertToModel(result)
+                //val converter = Mappers.getMapper(PhotoAlbumConverter::class.java)
+                //val photoAlbumModel = converter.convertToModel(result)
 
-                return ResponseEntity.ok(photoAlbumModel)
+
+                return ResponseEntity.ok(PhotoAlbumModel(
+                        result.id,
+                        result.photoAlbumTitle,
+                        result.photoAlbumDescription
+                ))
             }
         }
 

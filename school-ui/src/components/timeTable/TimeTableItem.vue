@@ -3,8 +3,8 @@
     <b-tab :title="dayOfWeak">
         <!-- Будет тренеровка-->
         <div>
-            <b-form-checkbox v-model="isWorkDay" name="check-button" switch>
-                <div v-if="isWorkDay">
+            <b-form-checkbox v-model="isWorkDayLocal" name="check-button" switch>
+                <div v-if="isWorkDayLocal">
                     В {{dayOfWeak}} проводится тренеровка
                 </div>
                 <div v-else>
@@ -22,8 +22,8 @@
         >
             <b-form-input
                     id="input-1"
-                    v-model="openTime"
-                    :disabled="!isWorkDay"
+                    v-model="openTimeLocal"
+                    :disabled="!isWorkDayLocal"
                     type="time"
                     required
                     placeholder="Укажите время начала работы"
@@ -38,35 +38,35 @@
         >
             <b-form-input
                     id="input-2"
-                    v-model="closeTime"
-                    :disabled="!isWorkDay"
+                    v-model="closeTimeLocal"
+                    :disabled="!isWorkDayLocal"
                     type="time"
                     required
                     placeholder="Укажите время окончания работы"
             ></b-form-input>
         </b-form-group>
 
-        <div v-if="isWorkDay && openTime === null && closeTime === null">
+        <div v-if="isWorkDayLocal && openTimeLocal === null && closeTimeLocal === null">
             <b-alert show variant="warning">Укажите время начала и окончания тренеровки</b-alert>
         </div>
 
-        <div v-if="isWorkDay && openTime !== null && closeTime === null">
+        <div v-if="isWorkDayLocal && openTimeLocal !== null && closeTimeLocal === null">
             <b-alert show variant="warning">Укажите время окончания тренеровки</b-alert>
         </div>
 
-        <div v-if="isWorkDay && openTime === null && closeTime !== null">
+        <div v-if="isWorkDayLocal && openTimeLocal === null && closeTimeLocal !== null">
             <b-alert show variant="warning">Укажите время начала тренеровки</b-alert>
         </div>
 
-        <div v-if="isWorkDay && openTime!== null && closeTime!== null && !isCorrectTime(openTime, closeTime)">
+        <div v-if="isWorkDayLocal && openTimeLocal!== null && closeTimeLocal!== null && !isCorrectTime(openTimeLocal, closeTimeLocal)">
             <b-alert show variant="danger">Время начала тренировки задано большим чем время её окончания</b-alert>
         </div>
 
-        <div v-if="isWorkDay && openTime!== null && closeTime!== null && isCorrectTime(openTime, closeTime)">
-            <b-alert show variant="info">Продолжительность тренировки в {{dayOfWeak}} равна {{trainingDuration(openTime, closeTime)}}</b-alert>
+        <div v-if="isWorkDay && openTimeLocal!== null && closeTimeLocal!== null && isCorrectTime(openTimeLocal, closeTimeLocal)">
+            <b-alert show variant="info">Продолжительность тренировки в {{dayOfWeak}} равна {{trainingDuration(openTime, closeTimeLocal)}}</b-alert>
         </div>
 
-        <div v-if="isWorkDay === false">
+        <div v-if="isWorkDayLocal === false">
             <b-alert show variant="info">В {{dayOfWeak}} тренировка не проводится</b-alert>
         </div>
     </b-tab>
@@ -79,6 +79,34 @@
     export default {
         props: ['dayIndex', 'dayOfWeak', 'isWorkDay', 'openTime', 'closeTime'],
         name: "TimeTableItem",
+
+        computed: {
+            isWorkDayLocal: {
+                get: function() {
+                    return this.isWorkDay
+                },
+                set: function(value) {
+                    this.$emit('update', value, this.openTime, this.closeTime);
+                }
+            },
+            openTimeLocal: {
+                get: function() {
+                    return this.openTime
+                },
+                set: function(value) {
+                    this.$emit('update', this.isWorkDay, value, this.closeTime);
+                }
+            },
+            closeTimeLocal: {
+                get: function() {
+                    return this.closeTime
+                },
+                set: function(value) {
+                    this.$emit('update', this.isWorkDay, this.openTime, value);
+                }
+            }
+        },
+
         methods: {
             trainingDuration: function (beginTime, endTime) {
                 const begin = new moment(beginTime,"HH:mm");
@@ -92,7 +120,7 @@
                 const end = new moment(endTime,'HH:mm');
                 return begin.isBefore(end);
             }
-        },
+        }
     }
 </script>
 

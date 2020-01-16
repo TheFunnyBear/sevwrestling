@@ -6,11 +6,12 @@
     <b-container fluid>
       <b-row align-v="center">
         <b-col align="left" cols="8" align-self="center">
+          <b-form @submit="onSubmit" @reset="onReset" v-if="show">
           <b-card header-tag="header" footer-tag="footer">
             <template v-slot:header>
               <h6 class="mb-0">Добавление видео файла</h6>
             </template>
-            <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+
               <!-- Название альбома -->
               <b-form-group
                       id="input-group-1"
@@ -29,9 +30,6 @@
                         <option :value="null" disabled>-- Пожалуйста, выбирите название фото альбома --</option>
                       </template>
 
-                      <!-- These options will appear after the ones from 'options' prop -->
-                      <option value="C">Option C</option>
-                      <option value="D">Option D</option>
                     </b-form-select>
                     <CommentForControl
                             :showFirstMessage=Boolean(form.selectedAlbum)
@@ -70,13 +68,10 @@
                 <CommentForControl
                         :showFirstMessage=Boolean(form.photoFile)
                         :firstMessage="'Выбран файл с фотографией:'"
-                        :firstMessagePostfix=form.photoFile
+                        :firstMessagePostfix=getPhotoFileName()
                         :secondMessage = "'Файл с фотографией не выбран.'">
                 </CommentForControl>
-
               </b-form-group>
-
-            </b-form>
             <template v-slot:footer>
               <b-row align-v="center">
                 <b-col align="right">
@@ -86,6 +81,7 @@
               </b-row>
             </template>
           </b-card>
+          </b-form>
         </b-col>
       </b-row>
     </b-container>
@@ -99,6 +95,7 @@
   import PageHeader from '../../components/PageHeader.vue';
   import PageFooter from '../../components/PageFooter.vue';
   import CommentForControl from "../../components/CommentForControl.vue";
+  import moment from "moment";
 
   export default {
     components: {NavigationHeader, PageHeader, PageFooter, CommentForControl},
@@ -109,21 +106,70 @@
           photoFile: null,
           selectedAlbum: null,
         },
+        PictureModel : {
+            /**
+            * Идентификатор изображения
+            */
+            id: 0,
+
+            /**
+            * Уникальны идентификатор изображения
+            */
+            pictureUuid: null,
+
+           /**
+           * Идентификатор фотоальбома
+           */
+           photoAlbumId: 0,
+
+            /**
+            *  Уникальное имя файла
+            */
+            uniqFileName: '',
+
+            /**
+            * Коментарий к файлу
+            */
+            fileComment: '',
+
+            /**
+            * Файл удалён
+            */
+            isDeleted: false
+        },
+        fileUuid: '',
+        uploadFileUniqName: '',
+        size: 0,
         isAdminMode: true,
         pageTitle: 'Добавить фотографию в альбом',
         pageDescription: 'На этой странице вы можите добавить фотографию в альбом.',
         show: true,
-        options: [
-          { value: 'A', text: 'Option A (from options prop)' },
-          { value: 'B', text: 'Option B (from options prop)' }
-        ]
+        options: []
       }
     },
+    created: function () {
+      console.log("Create function invoked!");
+      let url = `photoAlbums/`;
+      this.$http.get(url).then(result =>
+              result.json().then(data => {
+                        data.forEach(photoAlbumModel => this.options.push(
+                                {
+                                  value: photoAlbumModel.id,
+                                  text: photoAlbumModel.photoAlbumTitle + " | " +photoAlbumModel.photoAlbumDescription
+                                }));
+                      }
+              )
+      )
+    },
+
     methods: {
       onSubmit(evt) {
+        console.log("OnSubmit function invoked!");
         evt.preventDefault();
-        alert(JSON.stringify(this.form))
+        this.uploadFile();
+        console.log("OnSubmit function completed.");
       },
+
       onReset(evt) {
         evt.preventDefault();
         // Reset our form values
@@ -135,7 +181,62 @@
         this.$nextTick(() => {
           this.show = true
         })
+      },
+
+      uploadFile: function () {
+        console.log('Sending file');
+        let formData = new FormData();
+        formData.append('file', this.form.photoFile);
+
+        let url = `files/uploadFile/`;
+        this.$http.post(
+                url,
+                formData,
+                {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }
+        ).then(result =>
+                result.json().then(data => {
+                          this.fileUuid = data.fileUuid;
+                          this.uploadFileUniqName = data.uniqFileName;
+                          this.size = data.size;
+                          console.log("File uploaded start sending data");
+                          this.sendData();
+                        }
+                ), response => {
+          console.log("File was not uploaded not sending data");
+          // error callback
+        });
+      },
+
+      sendData: function () {
+        console.log('Sending data');
+
+        this.PictureModel.pictureUuid = this.fileUuid;
+        this.PictureModel.photoAlbumId = this.form.selectedAlbum;
+        this.PictureModel.uniqFileName = this.uploadFileUniqName;
+        this.PictureModel.fileComment = this.form.comment;
+        this.PictureModel.isDeleted = false;
+
+        let url = `pictures/create/`;
+        this.$http.post(url, JSON.stringify(this.PictureModel)).then(response => {
+          console.log("Post response completed with status:", response.status);
+          this.$router.push('/photos_manage');
+        }, response => {
+          // error callback
+        });
+      },
+
+      getPhotoFileName: function() {
+        if (this.form.photoFile != null)
+        {
+          return this.form.photoFile.name;
+        }
+        return '';
       }
+
     }
 
   }

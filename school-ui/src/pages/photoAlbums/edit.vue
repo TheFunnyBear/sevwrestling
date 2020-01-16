@@ -41,7 +41,7 @@
               <template v-slot:footer>
                 <b-row align-v="center">
                   <b-col align="right">
-                    <b-button type="submit" variant="primary">Добавить фотоальбом</b-button>
+                    <b-button type="submit" variant="primary">Обновить фотоальбом</b-button>
                     <b-button type="reset" variant="danger">Очистить</b-button>
                   </b-col>
                 </b-row>
@@ -86,11 +86,25 @@
            */
           photoAlbumDescription: ''
         },
+        oldPhotoAlbumModel: null,
         isAdminMode: true,
-        pageTitle: 'Добавить альбом для фотографий',
-        pageDescription: 'На этой странице вы можите добавить альбом фотографий.',
+        pageTitle: 'Редактирование альбома для фотографий',
+        pageDescription: 'На этой странице вы можите отредактировать альбом фотографий.',
         show: true,
       }
+    },
+    created: function () {
+      console.log("Create function invoked!");
+      let id = this.$route.params.id;
+      let url = `photoAlbum/${id}`;
+      this.$http.get(url).then(result =>
+              result.json().then(data => {
+                        this.oldPhotoAlbumModel = data;
+                        this.form.photoAlbumTitle = this.oldPhotoAlbumModel.photoAlbumTitle;
+                        this.form.photoAlbumDescription = this.oldPhotoAlbumModel.photoAlbumDescription;
+                      }
+              )
+      )
     },
     methods: {
       onSubmit(evt) {
@@ -100,7 +114,8 @@
         this.PhotoAlbumModel.photoAlbumTitle = this.form.photoAlbumTitle;
         this.PhotoAlbumModel.photoAlbumDescription = this.form.photoAlbumDescription;
 
-        let url = `photoAlbum/create/`;
+        let id = this.$route.params.id;
+        let url = `photoAlbum/update/${id}`;
         this.$http.post(url, JSON.stringify( this.PhotoAlbumModel)).then(response => {
           console.log("Post response completed with status:", response.status);
           this.$router.push('/photoAlbums_manage');

@@ -1,11 +1,11 @@
 package com.wrestling.school.models
 
-import java.util.*
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 
 /**
  * Видео
  */
-data class VideoModel (
+class VideoModel (
         /**
          * Идентификатор видео
          */
@@ -14,17 +14,12 @@ data class VideoModel (
         /**
          * Уникальны идентификатор видео
          */
-        val videoUuid: UUID,
+        val videoUuid: String,
 
         /**
-         * Имя файла
+         *  Уникальное имя файла
          */
-        val fileName: String,
-
-        /**
-         * Размер файла в байтах
-         */
-        val fileSize: Long,
+        val uniqFileName: String,
 
         /**
          * Коментарий к файлу
@@ -35,4 +30,16 @@ data class VideoModel (
          * Файл удалён
          */
         val isDeleted: Boolean
-)
+) {
+        /**
+         * Строка для загрузки
+         */
+        val videoDownloadUri: String
+        get() {
+                return ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/api/files/downloadFile/")
+                        .path(uniqFileName)
+                        .toUriString()
+        }
+
+}

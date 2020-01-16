@@ -24,14 +24,14 @@ data class PictureDto (
         val pictureUuid: UUID = UUID.randomUUID(),
 
         /**
-         * Имя файла
+         * Идентификатор фотоальбома
          */
-        val fileName: String = "",
+        val photoAlbumId: Long = 0,
 
         /**
-         * Размер файла в байтах
+         *  Уникальное имя файла
          */
-        val fileSize: Long = 0,
+        val uniqFileName: String = "",
 
         /**
          * Коментарий к файлу

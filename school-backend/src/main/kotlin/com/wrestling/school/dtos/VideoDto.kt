@@ -7,10 +7,10 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 
 /**
- *
+ * Видео файл
  */
 @Entity
-data class VideoResource (
+data class VideoDto (
         /**
          * Идентификатор видео
          */
@@ -24,14 +24,9 @@ data class VideoResource (
         val videoUuid: UUID = UUID.randomUUID(),
 
         /**
-         * Имя файла
+         *  Уникальное имя файла
          */
-        val fileName: String = "",
-
-        /**
-         * Размер файла в байтах
-         */
-        val fileSize: Long = 0,
+        val uniqFileName: String = "",
 
         /**
          * Коментарий к файлу

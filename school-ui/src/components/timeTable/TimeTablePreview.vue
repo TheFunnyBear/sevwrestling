@@ -17,14 +17,85 @@
                 </b-card>
             </b-col>
         </b-row>
+        <b-row>
+            Расписание актуально на: {{actualityDate}}
+        </b-row>
     </b-container>
 </template>
 
 <script>
+    import moment from 'moment';
+
     export default {
         name: "TimeTablePreview",
 
         components: {},
+        created: function () {
+            console.log("Create function invoked!");
+            let url = `calendar/last/`;
+            this.$http.get(url).then(result =>
+                result.json().then(data => {
+                    this.calendar = data;
+                    const currentActualityDate = new moment(this.calendar.actualityDate);
+                    this.actualityDate =  currentActualityDate.format("DD-MM-YYYY");
+                    this.calendarItems.push(
+                        {
+                            dayIndex: 1,
+                            dayOfWeak: 'Понедельник',
+                            isWorkDay: this.calendar.monday.isWorkDay,
+                            openTime: this.calendar.monday.openTime,
+                            closeTime: this.calendar.monday.closeTime
+                        });
+                    this.calendarItems.push(
+                        {
+                            dayIndex: 2,
+                            dayOfWeak: 'Вторник',
+                            isWorkDay: this.calendar.tuesday.isWorkDay,
+                            openTime: this.calendar.tuesday.openTime,
+                            closeTime: this.calendar.tuesday.closeTime
+                        });
+                    this.calendarItems.push(
+                        {
+                            dayIndex: 3,
+                            dayOfWeak:'Среда',
+                            isWorkDay: this.calendar.wednesday.isWorkDay,
+                            openTime: this.calendar.wednesday.openTime,
+                            closeTime:this.calendar.wednesday.closeTime
+                        });
+                    this.calendarItems.push(
+                        {
+                            dayIndex: 4,
+                            dayOfWeak:'Четверг',
+                            isWorkDay: this.calendar.thursday.isWorkDay,
+                            openTime: this.calendar.thursday.openTime,
+                            closeTime:this.calendar.thursday.closeTime
+                        });
+                    this.calendarItems.push(
+                        {
+                            dayIndex: 5,
+                            dayOfWeak:'Пятница',
+                            isWorkDay: this.calendar.friday.isWorkDay,
+                            openTime: this.calendar.friday.openTime,
+                            closeTime:this.calendar.friday.closeTime
+                        });
+                    this.calendarItems.push(
+                        {
+                            dayIndex: 6,
+                            dayOfWeak:'Суббота',
+                            isWorkDay: this.calendar.saturday.isWorkDay,
+                            openTime: this.calendar.saturday.openTime,
+                            closeTime:this.calendar.saturday.closeTime
+                        });
+                    this.calendarItems.push(
+                        {
+                            dayIndex: 7,
+                            dayOfWeak:'Воскресенье',
+                            isWorkDay: this.calendar.sunday.isWorkDay,
+                            openTime: this.calendar.sunday.openTime,
+                            closeTime:this.calendar.sunday.closeTime
+                        });
+                }))
+        },
         data() {
             return {
                 fields: [
@@ -44,57 +115,9 @@
                         sortable: false,
                     }
                 ],
-                calendarItems: [
-                    {
-                        dayIndex: 1,
-                        dayOfWeak: 'Понедельник',
-                        isWorkDay: true,
-                        openTime: '17:00',
-                        closeTime: '19:00'
-                    },
-                    {
-                        dayIndex: 2,
-                        dayOfWeak: 'Вторник',
-                        isWorkDay: true,
-                        openTime: '17:00',
-                        closeTime: '19:00'
-                    },
-                    {
-                        dayIndex: 3,
-                        dayOfWeak: 'Среда',
-                        isWorkDay: true,
-                        openTime: '17:00',
-                        closeTime: '19:00'
-                    },
-                    {
-                        dayIndex: 4,
-                        dayOfWeak: 'Четверг',
-                        isWorkDay: true,
-                        openTime: '17:00',
-                        closeTime: '19:00'
-                    },
-                    {
-                        dayIndex: 5,
-                        dayOfWeak: 'Пятница',
-                        isWorkDay: true,
-                        openTime: '17:00',
-                        closeTime: '19:00'
-                    },
-                    {
-                        dayIndex: 6,
-                        dayOfWeak: 'Суббота',
-                        isWorkDay: true,
-                        openTime: '10:00',
-                        closeTime: '12:00'
-                    },
-                    {
-                        dayIndex: 7,
-                        dayOfWeak: 'Воскресенье',
-                        isWorkDay: false,
-                        openTime: null,
-                        closeTime: null
-                    }
-                ]
+                calendar: null,
+                calendarItems: [],
+                actualityDate: ""
             }
         },
         methods: {

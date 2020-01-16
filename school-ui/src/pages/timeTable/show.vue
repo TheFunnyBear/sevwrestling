@@ -2,7 +2,7 @@
   <div>
     <NavigationHeader :isAdminMode="isAdminMode"></NavigationHeader>
     <PageHeader :pageTitle="pageTitle" :pageDescription="pageDescription"/>
-    <TimeTablePreview></TimeTablePreview>
+    <TimeTablePreview/>
     <PageFooter/>
   </div>
 </template>
@@ -21,6 +21,6 @@
         pageTitle: 'Просмотр расписание',
         pageDescription: 'На этой странице отабражается расписание тренировок.',
       }
-    }
+    },
   }
 </script>

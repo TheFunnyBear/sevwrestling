@@ -1,13 +1,10 @@
 package com.wrestling.school.controllers
 
 import com.wrestling.school.dtos.MessageDto
-import com.wrestling.school.mappers.MessageConverter
 import com.wrestling.school.models.MessageModel
 import com.wrestling.school.repositories.MessagesRepository
 import javafx.application.Application
-import org.mapstruct.factory.Mappers
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api")
-//@CrossOrigin(origins = ["*"], allowedHeaders = ["*"])
 @CrossOrigin(origins = ["http://localhost:8000"], maxAge = 4800, allowCredentials = "false")
 class MessagesController (private val repository: MessagesRepository){
     private val log = LoggerFactory.getLogger(Application::class.java)
