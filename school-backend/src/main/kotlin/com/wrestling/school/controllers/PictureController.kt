@@ -27,7 +27,6 @@ class PictureController (private val repository: PictureRepository) {
         return repository.findAll().map {
             pictureDto ->
             PictureModel(
-                    pictureDto.id,
                     pictureDto.pictureUuid.toString(),
                     pictureDto.photoAlbumId,
                     pictureDto.uniqFileName,
@@ -40,11 +39,10 @@ class PictureController (private val repository: PictureRepository) {
      * Возвращает фотографию по её идентификатору
      */
     @GetMapping("/picture/{id}")
-    fun findById(@PathVariable id: Long): ResponseEntity<PictureModel>? {
+    fun findById(@PathVariable id: String): ResponseEntity<PictureModel>? {
 
         return repository.findById(id).map {
             ResponseEntity.ok(PictureModel(
-                    it.id,
                     it.pictureUuid.toString(),
                     it.photoAlbumId,
                     it.uniqFileName,
@@ -65,7 +63,6 @@ class PictureController (private val repository: PictureRepository) {
         return repository.findAll(currentPageWithTenMessages).map {
             pictureDto ->
             PictureModel(
-                    pictureDto.id,
                     pictureDto.pictureUuid.toString(),
                     pictureDto.photoAlbumId,
                     pictureDto.uniqFileName,
@@ -78,11 +75,10 @@ class PictureController (private val repository: PictureRepository) {
      * Возвращает все фотографии фотоальбома по его идентификатору
      */
     @GetMapping("/photoAlbumPictures/{id}")
-    fun findAllInPhotoAlbumId(@PathVariable id: Long): List<PictureModel> {
+    fun findAllInPhotoAlbumId(@PathVariable id: String): List<PictureModel> {
 
         return repository.findByPhotoAlbumId(id).map { pictureDto ->
             PictureModel(
-                    pictureDto.id,
                     pictureDto.pictureUuid.toString(),
                     pictureDto.photoAlbumId,
                     pictureDto.uniqFileName,
@@ -98,11 +94,7 @@ class PictureController (private val repository: PictureRepository) {
     fun create(@RequestBody pictureModel : PictureModel) {
         log.info("Создание новой фотографии.")
 
-        //val converter = Mappers.getMapper(PhotoAlbumConverter::class.java)
-        //val photoAlbumDto = converter.convertToDto(photoAlbum)
-
         val photoAlbumDto = PictureDto(
-                pictureModel.id,
                 UUID.fromString(pictureModel.pictureUuid),
                 pictureModel.photoAlbumId,
                 pictureModel.uniqFileName,
@@ -118,7 +110,7 @@ class PictureController (private val repository: PictureRepository) {
      * Обновляем фотоальбом
      */
     @PostMapping("/pictures/update/{id}")
-    fun update(@PathVariable id: Long, @RequestBody pictureModel : PictureModel) : ResponseEntity<PictureModel>
+    fun update(@PathVariable id: String, @RequestBody pictureModel : PictureModel) : ResponseEntity<PictureModel>
     {
         log.info("Обновляем фотографию.")
 
@@ -136,7 +128,6 @@ class PictureController (private val repository: PictureRepository) {
         val result = repository.save(updatePictureDto)
 
         return ResponseEntity.ok(PictureModel(
-                result.id,
                 result.pictureUuid.toString(),
                 result.photoAlbumId,
                 result.uniqFileName,
@@ -149,7 +140,7 @@ class PictureController (private val repository: PictureRepository) {
      * Удаляем фотографию
      */
     @DeleteMapping("/pictures/delete/{id}")
-    fun delete(@PathVariable id: Long)
+    fun delete(@PathVariable id: String)
     {
         log.info("Удаление фотоальбома.")
 

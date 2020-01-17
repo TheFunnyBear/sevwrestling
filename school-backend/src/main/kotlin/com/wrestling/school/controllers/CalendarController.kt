@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 @RestController
@@ -59,7 +60,7 @@ class CalendarController (private val repository: CalendarRepository) {
     @GetMapping("/calendar/last")
     fun findLast(): ResponseEntity<CalendarModel>? {
 
-        return repository.findTopByOrderByIdDesc().map {
+        return repository.findTopByOrderByActualityDateDesc().map {
             ResponseEntity.ok(CalendarModel(
                     it.id,
                     CalendarItem(it.mondayIsWorkDay,
@@ -88,14 +89,14 @@ class CalendarController (private val repository: CalendarRepository) {
     }
 
     /**
-     * Создаёт новое видео
+     * Создаёт новый календарь
      */
     @PostMapping("/calendar/create")
     fun create(@RequestBody calendarModel : CalendarModel) {
         log.info("Создание нового календаря.")
 
         val calendarDto = CalendarDto(
-                calendarModel.id,
+                UUID.randomUUID().toString(),
                 calendarModel.monday.isWorkDay,
 
                 parseTime(calendarModel.monday.openTime),
@@ -126,10 +127,10 @@ class CalendarController (private val repository: CalendarRepository) {
     }
 
     /**
-     * Удаляем видео
+     * Удаляем календарь
      */
     @DeleteMapping("/calendar/delete/{id}")
-    fun delete(@PathVariable id: Long)
+    fun delete(@PathVariable id: String)
     {
         log.info("Удаление календаря.")
 
@@ -138,6 +139,9 @@ class CalendarController (private val repository: CalendarRepository) {
         log.info("Календарь удалён.")
     }
 
+    /**
+     * Преаброзует время в строку
+     */
     private  fun getTimeAsString(time: LocalTime?) : String {
         val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 

@@ -14,23 +14,28 @@
       <change afterPath="$PROJECT_DIR$/src/components/PageHeader.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/coach/CoachInfoItem.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/coach/CoachInfoItemEdit.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/coach/CoachInfoList.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/coach/CoachInfoNotFoundAlert.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/maps/RouteMap.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/messages/MessageItem.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/messages/MessageItemEdit.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/messages/MessageManageItem.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/messages/MessageNotFoundAlert.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/messages/MessagesList.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/messages/MessagesManageList.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/photoAlbums/PhotoAlbumManageItem.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/photoAlbums/PhotoAlbumManageList.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/photoAlbums/PhotoAlbumNotFoundAlert.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/picture/PictureItem.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/picture/PictureManageItem.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/picture/PictureManageList.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/picture/PictureNotFoundAlert.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/timeTable/TimeTable.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/timeTable/TimeTableItem.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/timeTable/TimeTableNotFoundAlert.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/timeTable/TimeTablePreview.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/video/VideoItem.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/video/VideoList.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/video/VideoNotFoundAlert.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/pages/info/edit.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/pages/info/show.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/pages/news/add.vue" afterDir="false" />
@@ -106,17 +111,17 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/video" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/coach" />
     <property name="settings.editor.selected.configurable" value="ide.date.format" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components/coach" />
       <recent name="$PROJECT_DIR$/src/components/video" />
-      <recent name="$PROJECT_DIR$/src/pages/photoAlbums" />
       <recent name="$PROJECT_DIR$/src/components/picture" />
       <recent name="$PROJECT_DIR$/src/components/photoAlbums" />
-      <recent name="$PROJECT_DIR$/src/components/messages" />
+      <recent name="$PROJECT_DIR$/src/components/timeTable" />
     </key>
   </component>
   <component name="ServiceViewManager">
@@ -149,6 +154,7 @@
       <workItem from="1578982822213" duration="11055000" />
       <workItem from="1579019098010" duration="18899000" />
       <workItem from="1579114498758" duration="26573000" />
+      <workItem from="1579267080256" duration="12073000" />
     </task>
     <servers />
   </component>

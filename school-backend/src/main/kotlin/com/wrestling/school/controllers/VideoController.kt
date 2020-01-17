@@ -26,7 +26,6 @@ class VideoController (private val repository: VideoRepository) {
         return repository.findAll().map {
             videoDto ->
             VideoModel(
-                    videoDto.id,
                     videoDto.videoUuid.toString(),
                     videoDto.uniqFileName,
                     videoDto.fileComment,
@@ -45,7 +44,6 @@ class VideoController (private val repository: VideoRepository) {
         return repository.findAll(currentPageWithTenMessages).map {
             videoDto ->
             VideoModel(
-                    videoDto.id,
                     videoDto.videoUuid.toString(),
                     videoDto.uniqFileName,
                     videoDto.fileComment,
@@ -61,7 +59,6 @@ class VideoController (private val repository: VideoRepository) {
         log.info("Создание нового видео.")
 
         val videoDto = VideoDto(
-                videoModel.id,
                 UUID.fromString(videoModel.videoUuid),
                 videoModel.uniqFileName,
                 videoModel.fileComment,
@@ -76,7 +73,7 @@ class VideoController (private val repository: VideoRepository) {
      * Удаляем видео
      */
     @DeleteMapping("/videos/delete/{id}")
-    fun delete(@PathVariable id: Long)
+    fun delete(@PathVariable id: String)
     {
         log.info("Удаление видео.")
 

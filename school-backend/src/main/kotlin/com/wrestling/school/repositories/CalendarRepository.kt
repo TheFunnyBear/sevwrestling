@@ -1,9 +1,10 @@
 package com.wrestling.school.repositories
 
 import com.wrestling.school.dtos.CalendarDto
-import org.springframework.data.repository.PagingAndSortingRepository
+import org.springframework.data.mongodb.repository.MongoRepository
 import java.util.*
 
-interface CalendarRepository : PagingAndSortingRepository<CalendarDto, Long> {
+interface CalendarRepository : MongoRepository<CalendarDto, String> {
     fun findTopByOrderByIdDesc(): Optional<CalendarDto>
+    fun findTopByOrderByActualityDateDesc(): Optional<CalendarDto>
 }

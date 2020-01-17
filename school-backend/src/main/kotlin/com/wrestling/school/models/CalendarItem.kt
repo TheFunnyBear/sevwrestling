@@ -1,7 +1,5 @@
 package com.wrestling.school.models
 
-import java.time.LocalDateTime
-
 class CalendarItem (
         /**
          * День является рабочим

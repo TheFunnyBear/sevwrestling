@@ -1,8 +1,8 @@
 package com.wrestling.school.repositories
 
 import com.wrestling.school.dtos.VideoDto
-import org.springframework.data.repository.PagingAndSortingRepository
+import org.springframework.data.mongodb.repository.MongoRepository
 
-interface VideoRepository : PagingAndSortingRepository<VideoDto, Long> {
+interface VideoRepository : MongoRepository<VideoDto, String> {
 
 }

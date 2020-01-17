@@ -26,6 +26,14 @@ module.exports = {
       {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          fallback: 'file-loader'
+        }
       }
     ]
   },
@@ -40,7 +48,7 @@ module.exports = {
       'localhost:9000'
     ],
     historyApiFallback: true,
-    noInfo: false
+    noInfo: false,
   },
   devtool: '#eval-source-map'
 }

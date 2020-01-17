@@ -19,5 +19,7 @@
 </script>
 
 <style scoped>
-
+    body {
+        background-color: #6d41001f;
+    }
 </style>

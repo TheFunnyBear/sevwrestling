@@ -1,35 +1,41 @@
 <template>
-    <b-container fluid>
-        <b-row align-v="center">
-            <b-col align="left" cols="8" align-self="center">
-                <b-card header-tag="header" footer-tag="footer">
-                    <template v-slot:header>
-                        <h6 class="mb-0">Текущее расписание</h6>
-                    </template>
+    <div v-if="timetableExist">
+        <b-container fluid>
+            <b-row align-v="center">
+                <b-col align="left" cols="8" align-self="center">
+                    <b-card header-tag="header" footer-tag="footer">
+                        <template v-slot:header>
+                            <h6 class="mb-0">Текущее расписание</h6>
+                        </template>
 
-                    <b-table
-                            :striped="true"
-                            :bordered="true"
-                            :no-border-collapse="true"
-                            :items="calendarItems"
-                            :fields="fields"
-                            :tbody-tr-class="rowClass"></b-table>
-                </b-card>
-            </b-col>
-        </b-row>
-        <b-row>
-            Расписание актуально на: {{actualityDate}}
-        </b-row>
-    </b-container>
+                        <b-table
+                                :striped="true"
+                                :bordered="true"
+                                :no-border-collapse="true"
+                                :items="calendarItems"
+                                :fields="fields"
+                                :tbody-tr-class="rowClass"></b-table>
+                    </b-card>
+                </b-col>
+            </b-row>
+            <b-row>
+                Расписание актуально на: {{actualityDate}}
+            </b-row>
+        </b-container>
+    </div>
+    <div v-else>
+        <time-table-not-found-alert/>
+    </div>
 </template>
 
 <script>
     import moment from 'moment';
+    import TimeTableNotFoundAlert from "./TimeTableNotFoundAlert.vue";
 
     export default {
         name: "TimeTablePreview",
 
-        components: {},
+        components: {TimeTableNotFoundAlert},
         created: function () {
             console.log("Create function invoked!");
             let url = `calendar/last/`;
@@ -94,10 +100,12 @@
                             openTime: this.calendar.sunday.openTime,
                             closeTime:this.calendar.sunday.closeTime
                         });
+                    this.timetableExist = true;
                 }))
         },
         data() {
             return {
+                timetableExist: false,
                 fields: [
                     {
                         key: 'dayOfWeak',

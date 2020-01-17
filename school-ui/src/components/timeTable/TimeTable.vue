@@ -8,6 +8,7 @@
 
                 <b-tabs card>
                     <TimeTableItem :dayOfWeak = "'Понедельник'"
+                                   :dayIndex = "'monday'"
                                    :isWorkDay="CalendarModel.monday.isWorkDay"
                                    :openTime="CalendarModel.monday.openTime"
                                    :closeTime="CalendarModel.monday.closeTime"
@@ -15,6 +16,7 @@
                     </TimeTableItem>
 
                     <TimeTableItem :dayOfWeak = "'Вторник'"
+                                   :dayIndex = "'tuesday'"
                                    :isWorkDay="CalendarModel.tuesday.isWorkDay"
                                    :openTime="CalendarModel.tuesday.openTime"
                                    :closeTime="CalendarModel.tuesday.closeTime"
@@ -22,6 +24,7 @@
                     </TimeTableItem>
 
                     <TimeTableItem :dayOfWeak = "'Среда'"
+                                   :dayIndex = "'wednesday'"
                                    :isWorkDay="CalendarModel.wednesday.isWorkDay"
                                    :openTime="CalendarModel.wednesday.openTime"
                                    :closeTime="CalendarModel.wednesday.closeTime"
@@ -29,6 +32,7 @@
                     </TimeTableItem>
 
                     <TimeTableItem :dayOfWeak = "'Четверг'"
+                                   :dayIndex = "'thursday'"
                                    :isWorkDay="CalendarModel.thursday.isWorkDay"
                                    :openTime="CalendarModel.thursday.openTime"
                                    :closeTime="CalendarModel.thursday.closeTime"
@@ -36,6 +40,7 @@
                     </TimeTableItem>
 
                     <TimeTableItem :dayOfWeak = "'Пятница'"
+                                   :dayIndex = "'friday'"
                                    :isWorkDay="CalendarModel.friday.isWorkDay"
                                    :openTime="CalendarModel.friday.openTime"
                                    :closeTime="CalendarModel.friday.closeTime"
@@ -43,6 +48,7 @@
                     </TimeTableItem>
 
                     <TimeTableItem :dayOfWeak = "'Суббота'"
+                                   :dayIndex = "'saturday'"
                                    :isWorkDay="CalendarModel.saturday.isWorkDay"
                                    :openTime="CalendarModel.saturday.openTime"
                                    :closeTime="CalendarModel.saturday.closeTime"
@@ -50,6 +56,7 @@
                     </TimeTableItem>
 
                     <TimeTableItem :dayOfWeak = "'Воскресенье'"
+                                   :dayIndex = "'sunday'"
                                    :isWorkDay="CalendarModel.sunday.isWorkDay"
                                    :openTime="CalendarModel.sunday.openTime"
                                    :closeTime="CalendarModel.sunday.closeTime"
@@ -80,6 +87,7 @@
             return {
                 fields: ['dayOfWeak', 'openTime', 'closeTime'],
                 CalendarModel : {
+                    id: '',
                     monday : {
                         isWorkDay : false,
                         openTime : '',
@@ -206,6 +214,7 @@
                 console.log("OnSubmit function invoked!");
                 evt.preventDefault();
 
+                this.id = "";
                 this.CalendarModel.actualityDate = moment();
 
                 let url = `calendar/create/`;
@@ -223,6 +232,10 @@
                 this.CalendarModel.monday.isWorkDay = isWorkDay;
                 this.CalendarModel.monday.openTime = openTime;
                 this.CalendarModel.monday.closeTime = closeTime;
+                if (isWorkDay === false) {
+                    this.CalendarModel.monday.openTime = "";
+                    this.CalendarModel.monday.closeTime = "";
+                }
             },
 
             onTuesdayUpdate(isWorkDay, openTime, closeTime) {
@@ -230,6 +243,10 @@
                 this.CalendarModel.tuesday.isWorkDay = isWorkDay;
                 this.CalendarModel.tuesday.openTime = openTime;
                 this.CalendarModel.tuesday.closeTime = closeTime;
+                if (isWorkDay === false) {
+                    this.CalendarModel.tuesday.openTime = "";
+                    this.CalendarModel.tuesday.closeTime = "";
+                }
             },
 
             onWednesdayUpdate(isWorkDay, openTime, closeTime) {
@@ -237,6 +254,10 @@
                 this.CalendarModel.wednesday.isWorkDay = isWorkDay;
                 this.CalendarModel.wednesday.openTime = openTime;
                 this.CalendarModel.wednesday.closeTime = closeTime;
+                if (isWorkDay === false) {
+                    this.CalendarModel.wednesday.openTime = "";
+                    this.CalendarModel.wednesday.closeTime = "";
+                }
             },
 
             onThursdayUpdate(isWorkDay, openTime, closeTime) {
@@ -244,6 +265,10 @@
                 this.CalendarModel.thursday.isWorkDay = isWorkDay;
                 this.CalendarModel.thursday.openTime = openTime;
                 this.CalendarModel.thursday.closeTime = closeTime;
+                if (isWorkDay === false) {
+                    this.CalendarModel.thursday.openTime = "";
+                    this.CalendarModel.thursday.closeTime = "";
+                }
             },
 
             onFridayUpdate(isWorkDay, openTime, closeTime) {
@@ -251,6 +276,10 @@
                 this.CalendarModel.friday.isWorkDay = isWorkDay;
                 this.CalendarModel.friday.openTime = openTime;
                 this.CalendarModel.friday.closeTime = closeTime;
+                if (isWorkDay === false) {
+                    this.CalendarModel.friday.openTime = "";
+                    this.CalendarModel.friday.closeTime = "";
+                }
             },
 
             onSaturdayUpdate(isWorkDay, openTime, closeTime) {
@@ -258,6 +287,10 @@
                 this.CalendarModel.saturday.isWorkDay = isWorkDay;
                 this.CalendarModel.saturday.openTime = openTime;
                 this.CalendarModel.saturday.closeTime = closeTime;
+                if (isWorkDay === false) {
+                    this.CalendarModel.saturday.openTime = "";
+                    this.CalendarModel.saturday.closeTime = "";
+                }
             },
 
             onSundayUpdate(isWorkDay, openTime, closeTime) {
@@ -265,6 +298,10 @@
                 this.CalendarModel.sunday.isWorkDay = isWorkDay;
                 this.CalendarModel.sunday.openTime = openTime;
                 this.CalendarModel.sunday.closeTime = closeTime;
+                if (isWorkDay === false) {
+                    this.CalendarModel.sunday.openTime = "";
+                    this.CalendarModel.sunday.closeTime = "";
+                }
             },
 
             onReset(evt) {

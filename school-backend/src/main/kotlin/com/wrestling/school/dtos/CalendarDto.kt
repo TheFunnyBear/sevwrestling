@@ -1,7 +1,9 @@
 package com.wrestling.school.dtos
 
+import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.util.*
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -10,14 +12,13 @@ import javax.persistence.Id
 /**
  * Расписание
  */
-@Entity
+@Document(collection = "Calendar")
 data class CalendarDto (
         /**
          * Идентификатор календаря
          */
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        val id: Long = 0,
+        val id: String = UUID.randomUUID().toString(),
 
         /**
          *  Понедельник: День является рабочим

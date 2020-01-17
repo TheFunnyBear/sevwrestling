@@ -33,11 +33,6 @@ class UploadFileModel {
         }
 
         /**
-         * Идентификатор
-         */
-        val id: Long = 0;
-
-        /**
          * Идентификатор файла
          */
         var fileUuid: UUID

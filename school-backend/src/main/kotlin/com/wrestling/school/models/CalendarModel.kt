@@ -1,12 +1,13 @@
 package com.wrestling.school.models
 
 import java.time.LocalDateTime
+import java.util.*
 
 class CalendarModel (
         /**
          * Идентификатор календаря
          */
-        val id: Long,
+        val id: String,
 
         /**
          * Понедельник

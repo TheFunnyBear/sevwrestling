@@ -7,11 +7,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder
  */
 class PictureModel (
         /**
-         * Идентификатор изображения
-         */
-        val id: Long,
-
-        /**
          * Уникальны идентификатор изображения
          */
         val pictureUuid: String,
@@ -19,7 +14,7 @@ class PictureModel (
         /**
          * Идентификатор фотоальбома
          */
-        val photoAlbumId: Long,
+        val photoAlbumId: String,
 
         /**
          *  Уникальное имя файла

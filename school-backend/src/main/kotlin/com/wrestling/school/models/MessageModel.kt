@@ -1,5 +1,6 @@
 package com.wrestling.school.models
 
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.time.LocalDateTime
 import java.util.*
 
@@ -10,7 +11,7 @@ class MessageModel (
         /**
          * Идентификатор записи
          */
-        val id: Long,
+        val id: String,
 
         /**
          * Дата создания сообщения
@@ -38,7 +39,23 @@ class MessageModel (
         val pictureUuid: UUID,
 
         /**
+         *  Уникальное имя файла
+         */
+        val uniqFileName: String,
+
+        /**
          * Сообщение удалено
          */
         val isDeleted: Boolean
-)
+) {
+        /**
+         * Строка для загрузки
+         */
+        val pictureDownloadUri: String
+                get() {
+                        return ServletUriComponentsBuilder.fromCurrentContextPath()
+                                .path("/api/files/downloadFile/")
+                                .path(uniqFileName)
+                                .toUriString()
+                }
+}

@@ -1,6 +1,7 @@
 package com.wrestling.school.dtos
 
 import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime
 import java.util.*
 import javax.persistence.Entity
@@ -11,14 +12,13 @@ import javax.persistence.Id
 /**
  * Сообщение
  */
-@Entity
+@Document(collection = "Messages")
 data class MessageDto (
         /**
          * Идентификатор записи
          */
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        val id: Long = 0,
+        val id: String = UUID.randomUUID().toString(),
 
         /**
          * Дата создания сообщения
@@ -45,6 +45,11 @@ data class MessageDto (
          * Идентификатор изображения
          */
         val pictureUuid: UUID = UUID.randomUUID(),
+
+        /**
+         *  Уникальное имя файла изображения
+         */
+        val uniqFileName: String = "",
 
         /**
          * Сообщение удалено

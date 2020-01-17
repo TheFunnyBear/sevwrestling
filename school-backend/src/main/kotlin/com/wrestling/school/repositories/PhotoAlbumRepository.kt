@@ -1,8 +1,8 @@
 package com.wrestling.school.repositories
 
 import com.wrestling.school.dtos.PhotoAlbumDto
-import org.springframework.data.repository.PagingAndSortingRepository
+import org.springframework.data.mongodb.repository.MongoRepository
 
-interface PhotoAlbumRepository : PagingAndSortingRepository<PhotoAlbumDto, Long> {
+interface PhotoAlbumRepository : MongoRepository<PhotoAlbumDto, String> {
 
 }

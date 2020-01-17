@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="this.totalPages > 0">
         <b-container>
             <b-row align-v="center" align-h="center">
                 <b-pagination
@@ -35,14 +35,19 @@
         </b-container>
 
     </div>
+    <div v-else>
+        <message-not-found-alert/>
+    </div>
 </template>
 
 <script>
     import MessageManageItem from "./MessageManageItem.vue";
+    import MessageNotFoundAlert from "./MessageNotFoundAlert.vue";
 
     export default {
         name: "MessagesManageList",
         components: {
+            MessageNotFoundAlert,
             MessageManageItem
         },
         data(){

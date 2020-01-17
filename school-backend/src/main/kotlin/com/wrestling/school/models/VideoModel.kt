@@ -7,11 +7,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder
  */
 class VideoModel (
         /**
-         * Идентификатор видео
-         */
-        val id: Long,
-
-        /**
          * Уникальны идентификатор видео
          */
         val videoUuid: String,

@@ -1,12 +1,12 @@
 <template>
     <b-container fluid>
         <b-row align-v="center">
-            <b-col align="left" cols="8" align-self="center">
-                <b-card header-tag="header" footer-tag="footer">
-                    <template v-slot:header>
-                        <h6 class="mb-0">Обновить информацию о тренере</h6>
-                    </template>
-                    <b-form @submit="onSubmit" @reset="onReset">
+            <b-col align="left" cols="8" align-self="center" v-if="show">
+                <b-form @submit="onSubmit" @reset="onReset">
+                    <b-card header-tag="header" footer-tag="footer">
+                        <template v-slot:header>
+                            <h6 class="mb-0">Обновить информацию о тренере</h6>
+                        </template>
                         <!--Фамилия -->
                         <b-form-group
                                 id="input-group-1"
@@ -15,7 +15,7 @@
                         >
                             <b-form-input
                                     id="input-1"
-                                    v-model="form.Surname"
+                                    v-model="CoachInfoModel.surname"
                                     type="text"
                                     required
                                     placeholder="Укажите тут фамилию тренера"
@@ -30,7 +30,7 @@
                         >
                             <b-form-input
                                     id="input-2"
-                                    v-model="form.Name"
+                                    v-model="CoachInfoModel.name"
                                     type="text"
                                     required
                                     placeholder="Укажите тут имя тренера"
@@ -45,7 +45,7 @@
                         >
                             <b-form-input
                                     id="input-3"
-                                    v-model="form.Patronymic"
+                                    v-model="CoachInfoModel.patronymic"
                                     type="text"
                                     required
                                     placeholder="Укажите тут отчество тренера"
@@ -60,7 +60,7 @@
                         >
                             <b-form-input
                                     id="input-4"
-                                    v-model="form.Email"
+                                    v-model="CoachInfoModel.email"
                                     type="text"
                                     placeholder="Укажите тут E-Mail тренера, если он есть"
                             ></b-form-input>
@@ -74,7 +74,7 @@
                         >
                             <b-form-input
                                     id="input-5"
-                                    v-model="form.Phone"
+                                    v-model="CoachInfoModel.phone"
                                     type="text"
                                     placeholder="Укажите тут телефон тренера, если он есть"
                             ></b-form-input>
@@ -88,7 +88,7 @@
                         >
                             <b-form-input
                                     id="input-6"
-                                    v-model="form.Viber"
+                                    v-model="CoachInfoModel.viber"
                                     type="text"
                                     placeholder="Укажите тут номер Viber тренера, если он есть"
                             ></b-form-input>
@@ -97,67 +97,151 @@
                         <!--Skype -->
                         <b-form-group
                                 id="input-group-7"
-                                label="Viber:"
+                                label="Skype:"
                                 label-for="input-7"
                         >
                             <b-form-input
                                     id="input-7"
-                                    v-model="form.Skype"
+                                    v-model="CoachInfoModel.skype"
                                     type="text"
                                     placeholder="Укажите тут номер Skype тренера, если он есть"
                             ></b-form-input>
                         </b-form-group>
-                    </b-form>
-                    <template v-slot:footer>
-                        <b-row align-v="center">
-                            <b-col align="right">
-                                <b-button type="submit" variant="primary">Обновить информацию о тренере</b-button>
-                                <b-button type="reset" variant="danger">Очистить</b-button>
-                            </b-col>
-                        </b-row>
-                    </template>
-                </b-card>
+                        <template v-slot:footer>
+                            <b-row align-v="center">
+                                <b-col align="right">
+                                    <b-button type="submit" variant="primary">Обновить информацию о тренере</b-button>
+                                    <b-button type="reset" variant="danger">Очистить</b-button>
+                                </b-col>
+                            </b-row>
+                        </template>
+                    </b-card>
+                </b-form>
             </b-col>
         </b-row>
     </b-container>
 </template>
 
 <script>
+    import moment from "moment";
+
     export default {
         name: "coach-info-item-edit",
         props: ['formData'],
         data() {
             return {
-                form: {
-                    id: 1,
-                    Name: "Олег",
-                    Surname: "Вяткин",
-                    Patronymic: "Олегови",
-                    Email: "oleg@sevwrestling.ru",
-                    Phone: "+7(978)118-51-82",
-                    Viber: "+7(978)118-51-82",
-                    Skype: ""
-                }
+                CoachInfoModel: {
+                    /**
+                     * Идентификатор
+                     */
+                    id: "",
+
+                    /**
+                     * Имя
+                     */
+                    name: "",
+
+                    /**
+                     * Фамилия
+                     */
+                    surname: "",
+
+                    /**
+                     * Отчество
+                     */
+                    patronymic: "",
+
+                    /**
+                     * E-Mail
+                     */
+                    email: "",
+
+                    /**
+                     * Телефон
+                     */
+                    phone: "",
+
+                    /**
+                     * Viber
+                     */
+                    viber: "",
+
+                    /**
+                     * Skype
+                     */
+                    skype: ""
+                },
+                currentCoachInfo: null,
+                show: true
             }
         },
         created: function () {
             console.log("Create function invoked!");
+            let url = `coach/last/`;
+            this.$http.get(url).then(result =>
+                result.json().then(data => {
+                        this.currentCoachInfo = data;
+                        this.CoachInfoModel.id = this.currentCoachInfo.id;
+                        this.CoachInfoModel.name = this.currentCoachInfo.name;
+                        this.CoachInfoModel.surname = this.currentCoachInfo.surname;
+                        this.CoachInfoModel.patronymic = this.currentCoachInfo.patronymic;
+                        this.CoachInfoModel.email = this.currentCoachInfo.email;
+                        this.CoachInfoModel.phone = this.currentCoachInfo.phone;
+                        this.CoachInfoModel.viber = this.currentCoachInfo.viber;
+                        this.CoachInfoModel.skype = this.currentCoachInfo.skype;
+
+                    }, response => {
+                        // error callback
+                        this.CoachInfoModel.id = "";
+                        this.CoachInfoModel.name = "";
+                        this.CoachInfoModel.surname = "";
+                        this.CoachInfoModel.patronymic = "";
+                        this.CoachInfoModel.email = "";
+                        this.CoachInfoModel.phone = "";
+                        this.CoachInfoModel.viber = "";
+                        this.CoachInfoModel.skype = "";
+                    }
+                )
+            )
         },
+
         methods: {
             onSubmit(evt) {
+                console.log("OnSubmit function invoked!");
                 evt.preventDefault();
-                alert(JSON.stringify(this.form))
+
+                let url = `coach/create/`;
+                this.$http.post(url, JSON.stringify(this.CoachInfoModel)).then(response => {
+                    console.log("Post response completed with status:", response.status);
+                    this.$router.push('/info_show');
+
+                }, response => {
+                    // error callback
+                });
             },
             onReset(evt) {
                 evt.preventDefault();
                 // Reset our form values
-                this.form.Name = '';
-                this.form.Surname = '';
-                this.form.Patronymic = '';
-                this.form.Email = '';
-                this.form.Phone = '';
-                this.form.Viber = '';
-                this.form.Skype = '';
+                if(this.currentCoachInfo != null) {
+                    this.CoachInfoModel.id = this.currentCoachInfo.id;
+                    this.CoachInfoModel.name = this.currentCoachInfo.name;
+                    this.CoachInfoModel.surname = this.currentCoachInfo.surname;
+                    this.CoachInfoModel.patronymic = this.currentCoachInfo.patronymic;
+                    this.CoachInfoModel.email = this.currentCoachInfo.email;
+                    this.CoachInfoModel.phone = this.currentCoachInfo.phone;
+                    this.CoachInfoModel.viber = this.currentCoachInfo.viber;
+                    this.CoachInfoModel.skype = this.currentCoachInfo.skype;
+                }
+                else {
+                    this.CoachInfoModel.id = "";
+                    this.CoachInfoModel.name = "";
+                    this.CoachInfoModel.surname = "";
+                    this.CoachInfoModel.patronymic = "";
+                    this.CoachInfoModel.email = "";
+                    this.CoachInfoModel.phone = "";
+                    this.CoachInfoModel.viber = "";
+                    this.CoachInfoModel.skype = "";
+                }
 
                 // Trick to reset/clear native browser form validation state
                 this.show = false;
