@@ -60,7 +60,7 @@ class CalendarController (private val repository: CalendarRepository) {
     @GetMapping("/calendar/last")
     fun findLast(): ResponseEntity<CalendarModel>? {
 
-        return repository.findTopByOrderByIdDesc().map {
+        return repository.findTopByOrderByActualityDateDesc().map {
             ResponseEntity.ok(CalendarModel(
                     it.id,
                     CalendarItem(it.mondayIsWorkDay,

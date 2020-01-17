@@ -1,9 +1,9 @@
 <template>
     <div>
-        <b-navbar toggleable="lg" type="dark" variant="info">
+        <b-navbar toggleable="lg" type="dark" variant="light">
             <!-- Логотип -->
             <b-navbar-brand href="#">
-                <img src="https://placekitten.com/g/30/30" alt="Kitten">
+                <img width="15%" src="@/../assets/logo.png"/>
             </b-navbar-brand>
 
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -96,10 +96,12 @@
 <script>
     export default {
         props: ['isAdminMode'],
-        name: "NavigationHeader"
+        name: "NavigationHeader",
     }
 </script>
 
 <style scoped>
-
+    .bg-light {
+        background-color: #425f7b !important;
+    }
 </style>

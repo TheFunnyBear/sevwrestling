@@ -1,3 +1,5 @@
+package com.wrestling.school.controllers
+
 import com.wrestling.school.dtos.CoachInfoDto
 import com.wrestling.school.models.CoachInfoModel
 import com.wrestling.school.repositories.CoachInfoRepository

@@ -1,13 +1,13 @@
 <template>
-    <b-col md="4">
+    <b-col md="10" align-self="center">
         <div>
-            <b-embed
-                    type="video"
-                    aspect="16by9"
-                    :src="video.videoDownloadUri"
-                    allowfullscreen
-            ></b-embed>
-            <div>
+            <div class="video-frame">
+                <video style="width:100%; height:auto;" controls>
+                    <source :src="video.videoDownloadUri" type="video/mp4" />
+                </video>
+            </div>
+
+             <div>
                 {{video.fileComment}}
             </div>
         </div>

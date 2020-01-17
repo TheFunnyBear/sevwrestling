@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="totalPages > 0">
         <b-container>
             <b-row align-v="center" align-h="center">
                 <b-pagination
@@ -35,14 +35,19 @@
         </b-container>
 
     </div>
+    <div v-else>
+        <picture-not-found-alert/>
+    </div>
 </template>
 
 <script>
     import PictureManageItem from "./PictureManageItem.vue";
+    import PictureNotFoundAlert from "./PictureNotFoundAlert.vue";
 
     export default {
         name: "picture-manage-list",
         components: {
+            PictureNotFoundAlert,
             PictureManageItem
         },
         data(){

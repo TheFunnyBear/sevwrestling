@@ -75,7 +75,7 @@ class PictureController (private val repository: PictureRepository) {
      * Возвращает все фотографии фотоальбома по его идентификатору
      */
     @GetMapping("/photoAlbumPictures/{id}")
-    fun findAllInPhotoAlbumId(@PathVariable id: Long): List<PictureModel> {
+    fun findAllInPhotoAlbumId(@PathVariable id: String): List<PictureModel> {
 
         return repository.findByPhotoAlbumId(id).map { pictureDto ->
             PictureModel(

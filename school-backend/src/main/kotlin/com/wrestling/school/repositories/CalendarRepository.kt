@@ -6,4 +6,5 @@ import java.util.*
 
 interface CalendarRepository : MongoRepository<CalendarDto, String> {
     fun findTopByOrderByIdDesc(): Optional<CalendarDto>
+    fun findTopByOrderByActualityDateDesc(): Optional<CalendarDto>
 }

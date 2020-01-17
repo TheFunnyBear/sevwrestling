@@ -3,45 +3,56 @@
     <NavigationHeader :isAdminMode="isAdminMode"></NavigationHeader>
     <PageHeader :pageTitle="pageTitle" :pageDescription="pageDescription"/>
 
-    <b-form v-if="show">
-      <!-- Название альбома -->
-      <b-form-group
-              id="input-group-1"
-              label="Фото альбом:"
-              label-for="input-1"
-              description="Выбирите фотоальбом из которого будут отображаться фото."
-      >
-        <b-form-select
-                v-model="selectedAlbum"
-                id="input-1"
-                :options="options"
-                class="mb-3"
-                v-on:change="onPhotoAlbumChange">
+    <div v-if="this.options.length > 0">
+      <b-form v-if="show">
+        <!-- Название альбома -->
+        <b-form-group
+                id="input-group-1"
+                label="Фото альбом:"
+                label-for="input-1"
+                description="Выбирите фотоальбом из которого будут отображаться фото."
+        >
+          <b-form-select
+                  v-model="selectedAlbum"
+                  id="input-1"
+                  :options="options"
+                  class="mb-3"
+                  v-on:change="onPhotoAlbumChange">
 
-          <!-- This slot appears above the options from 'options' prop -->
-          <template v-slot:first>
-            <option :value="null" disabled>-- Пожалуйста, выбирите название фото альбома --</option>
-          </template>
+            <!-- This slot appears above the options from 'options' prop -->
+            <template v-slot:first>
+              <option :value="null" disabled>-- Пожалуйста, выбирите название фото альбома --</option>
+            </template>
 
-        </b-form-select>
-        <CommentForControl
-                :showFirstMessage=Boolean(selectedAlbum)
-                :firstMessage="'Выбран фотоальбом:'"
-                :firstMessagePostfix=selectedAlbum
-                :secondMessage = "'Фотоальбом не выбран.'">
-        </CommentForControl>
-      </b-form-group>
-    </b-form>
+          </b-form-select>
+          <CommentForControl
+                  :showFirstMessage=Boolean(selectedAlbum)
+                  :firstMessage="'Выбран фотоальбом:'"
+                  :firstMessagePostfix=selectedAlbum
+                  :secondMessage = "'Фотоальбом не выбран.'">
+          </CommentForControl>
+        </b-form-group>
+      </b-form>
 
-    <div v-if="show">
-      <b-container fluid class="p-4 bg-dark" v-if="pictures != null && pictures.length > 0">
-        <b-row>
-          <b-col>
-            <PictureItem v-for="picture in pictures" v-bind:key="picture.id" :picture="picture"/>
-          </b-col>
-        </b-row>
-      </b-container>
+      <div v-if="show">
+        <div v-if="pictures != null && pictures.length > 0">
+          <b-container fluid class="p-4 bg-dark" >
+            <b-row>
+              <b-col>
+                <PictureItem v-for="picture in pictures" v-bind:key="picture.id" :picture="picture"/>
+              </b-col>
+            </b-row>
+          </b-container>
+        </div>
+        <div v-else>
+          <picture-not-found-alert/>
+        </div>
+      </div>
     </div>
+    <div v-else>
+      <photo-album-not-found-alert/>
+    </div>
+
     <PageFooter/>
   </div>
 </template>
@@ -52,9 +63,13 @@
   import PageFooter from '../../components/PageFooter.vue';
   import CommentForControl from "../../components/CommentForControl.vue";
   import PictureItem from "../../components/picture/PictureItem.vue";
+  import PhotoAlbumNotFoundAlert from "../../components/photoAlbums/PhotoAlbumNotFoundAlert.vue";
+  import PictureNotFoundAlert from "../../components/picture/PictureNotFoundAlert.vue";
 
   export default {
-    components: {NavigationHeader, PageHeader, PageFooter, CommentForControl, PictureItem},
+    components: {
+      PictureNotFoundAlert,
+      PhotoAlbumNotFoundAlert, NavigationHeader, PageHeader, PageFooter, CommentForControl, PictureItem},
 
     data() {
       return {
@@ -101,6 +116,7 @@
                             this.selectedAlbum = this.options[0].value;
                           }
                         }
+                        this.selectAlbum()
                         this.loadPicturesInSelectedAlbum();
                         this.refreshView();
                       }

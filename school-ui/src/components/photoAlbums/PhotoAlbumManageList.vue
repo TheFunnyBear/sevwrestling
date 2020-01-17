@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="this.totalPages > 0">
         <b-container>
             <b-row align-v="center" align-h="center">
                 <b-pagination
@@ -35,14 +35,19 @@
         </b-container>
 
     </div>
+    <div v-else>
+        <photo-album-not-found-alert/>
+    </div>
 </template>
 
 <script>
     import PhotoAlbumManageItem from "./PhotoAlbumManageItem.vue";
+    import PhotoAlbumNotFoundAlert from "./PhotoAlbumNotFoundAlert.vue";
 
     export default {
         name: "PhotoAlbumManageList",
         components: {
+            PhotoAlbumNotFoundAlert,
             PhotoAlbumManageItem
         },
         data(){

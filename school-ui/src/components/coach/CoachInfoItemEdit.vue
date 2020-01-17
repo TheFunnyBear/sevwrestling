@@ -134,7 +134,7 @@
                     /**
                      * Идентификатор
                      */
-                    id: 0,
+                    id: "",
 
                     /**
                      * Имя
@@ -192,7 +192,7 @@
 
                     }, response => {
                         // error callback
-                        this.CoachInfoModel.id = 0;
+                        this.CoachInfoModel.id = "";
                         this.CoachInfoModel.name = "";
                         this.CoachInfoModel.surname = "";
                         this.CoachInfoModel.patronymic = "";
@@ -211,7 +211,7 @@
                 evt.preventDefault();
 
                 let url = `coach/create/`;
-                this.$http.post(url, JSON.stringify( this.CoachInfoModel)).then(response => {
+                this.$http.post(url, JSON.stringify(this.CoachInfoModel)).then(response => {
                     console.log("Post response completed with status:", response.status);
                     this.$router.push('/info_show');
 
@@ -222,14 +222,26 @@
             onReset(evt) {
                 evt.preventDefault();
                 // Reset our form values
-                this.CoachInfoModel.id = this.currentCoachInfo.id;
-                this.CoachInfoModel.name = this.currentCoachInfo.name;
-                this.CoachInfoModel.surname = this.currentCoachInfo.surname;
-                this.CoachInfoModel.patronymic = this.currentCoachInfo.patronymic;
-                this.CoachInfoModel.email = this.currentCoachInfo.email;
-                this.CoachInfoModel.phone = this.currentCoachInfo.phone;
-                this.CoachInfoModel.viber = this.currentCoachInfo.viber;
-                this.CoachInfoModel.skype = this.currentCoachInfo.skype;
+                if(this.currentCoachInfo != null) {
+                    this.CoachInfoModel.id = this.currentCoachInfo.id;
+                    this.CoachInfoModel.name = this.currentCoachInfo.name;
+                    this.CoachInfoModel.surname = this.currentCoachInfo.surname;
+                    this.CoachInfoModel.patronymic = this.currentCoachInfo.patronymic;
+                    this.CoachInfoModel.email = this.currentCoachInfo.email;
+                    this.CoachInfoModel.phone = this.currentCoachInfo.phone;
+                    this.CoachInfoModel.viber = this.currentCoachInfo.viber;
+                    this.CoachInfoModel.skype = this.currentCoachInfo.skype;
+                }
+                else {
+                    this.CoachInfoModel.id = "";
+                    this.CoachInfoModel.name = "";
+                    this.CoachInfoModel.surname = "";
+                    this.CoachInfoModel.patronymic = "";
+                    this.CoachInfoModel.email = "";
+                    this.CoachInfoModel.phone = "";
+                    this.CoachInfoModel.viber = "";
+                    this.CoachInfoModel.skype = "";
+                }
 
                 // Trick to reset/clear native browser form validation state
                 this.show = false;
