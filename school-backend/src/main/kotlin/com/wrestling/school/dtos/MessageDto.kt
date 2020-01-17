@@ -1,6 +1,7 @@
 package com.wrestling.school.dtos
 
 import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime
 import java.util.*
 import javax.persistence.Entity
@@ -11,7 +12,7 @@ import javax.persistence.Id
 /**
  * Сообщение
  */
-@Entity
+@Document(collection = "Messages")
 data class MessageDto (
         /**
          * Идентификатор записи

@@ -1,6 +1,6 @@
 package com.wrestling.school.dtos
 
-import javax.persistence.Entity
+import org.springframework.data.mongodb.core.mapping.Document
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
@@ -8,7 +8,7 @@ import javax.persistence.Id
 /**
  * Фотоальбом
  */
-@Entity
+@Document(collection = "PhotoAlbums")
 data class PhotoAlbumDto (
         /**
          * Идентификатор фотоальбома

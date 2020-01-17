@@ -3,22 +3,21 @@
     <NavigationHeader :isAdminMode="isAdminMode"></NavigationHeader>
     <PageHeader :pageTitle="pageTitle" :pageDescription="pageDescription"/>
 
-
     <b-card-group deck>
       <b-card bg-variant="Light" header="Тренерский состав:" class="text-center">
         <b-card-text>
-          <CoachInfoList/>
+          <CoachInfoItem/>
         </b-card-text>
       </b-card>
 
-    <b-card bg-variant="Light" header="Как добраться:" class="text-center">
-      <b-card-text>
-        Занятия вольной борьбой проводятся проходят по адресу:<br>
-        г. Севастополь, ул. Частника, 87, в спортивном зале ДЮСШ№6
-      </b-card-text>
+      <b-card bg-variant="Light" header="Как добраться:" class="text-center">
+        <b-card-text>
+          Занятия вольной борьбой проводятся проходят по адресу:<br>
+          г. Севастополь, ул. Частника, 87, в спортивном зале ДЮСШ№6
+        </b-card-text>
 
-      <RouteMap/>
-    </b-card>
+        <RouteMap/>
+      </b-card>
     </b-card-group>
 
     <PageFooter/>
@@ -30,10 +29,10 @@
   import PageHeader from '../../components/PageHeader.vue';
   import PageFooter from '../../components/PageFooter.vue';
   import RouteMap from "../../components/maps/RouteMap.vue";
-  import CoachInfoList from "../../components/coach/CoachInfoList.vue";
+  import CoachInfoItem from "../../components/coach/CoachInfoItem.vue";
 
   export default {
-    components: {NavigationHeader, PageHeader, PageFooter, RouteMap, CoachInfoList},
+    components: {NavigationHeader, PageHeader, PageFooter, RouteMap, CoachInfoItem},
     data() {
       return {
         isAdminMode: true,

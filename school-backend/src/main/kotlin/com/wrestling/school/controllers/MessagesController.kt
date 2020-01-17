@@ -105,33 +105,24 @@ class MessagesController (private val repository: MessagesRepository){
     fun update(@PathVariable id: Long, @RequestBody message :MessageModel) : ResponseEntity<MessageModel>
     {
         val existingMessage = repository.findById(id);
-        if(existingMessage != null) {
-            var existingMessageDto: MessageDto = existingMessage.get()
-            var updateMessageDto =  existingMessageDto.copy(
-                    publicationDate = message.publicationDate,
-                    messageTitle = message.messageTitle,
-                    messageText = message.messageText
-            )
+        var existingMessageDto: MessageDto = existingMessage.get()
+        var updateMessageDto =  existingMessageDto.copy(
+                publicationDate = message.publicationDate,
+                messageTitle = message.messageTitle,
+                messageText = message.messageText
+        )
 
-            val result = repository.save(updateMessageDto);
+        val result = repository.save(updateMessageDto);
 
-            if (result != null) {
-                //val converter = Mappers.getMapper(MessageConverter::class.java)
-                //val messageModel = converter.convertToModel(result);
-
-                return ResponseEntity.ok(MessageModel(
-                        result.id,
-                        result.createdDate,
-                        result.publicationDate,
-                        result.messageTitle,
-                        result.messageText,
-                        result.pictureUuid,
-                        result.isDeleted
-                ));
-            }
-        }
-
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(MessageModel(
+                result.id,
+                result.createdDate,
+                result.publicationDate,
+                result.messageTitle,
+                result.messageText,
+                result.pictureUuid,
+                result.isDeleted
+        ))
     }
 
     /**

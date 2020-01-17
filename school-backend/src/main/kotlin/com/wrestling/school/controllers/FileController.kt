@@ -36,7 +36,7 @@ class FileController (
         log.info("uploadFile invoked")
 
         val fileUuid = UUID.randomUUID()
-        val uniqFileName = fileStorageService!!.storeFile(file, fileUuid)
+        val uniqFileName = fileStorageService.storeFile(file, fileUuid)
 
         val fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/api/files/downloadFile/")
@@ -72,7 +72,7 @@ class FileController (
     fun downloadFile(@PathVariable fileName: String?, request: HttpServletRequest): ResponseEntity<Resource> {
         log.info("downloadFile invoked")
 
-        val resource = fileStorageService!!.loadFileAsResource(fileName!!)
+        val resource = fileStorageService.loadFileAsResource(fileName!!)
         val result = downloadResource(resource, request)
 
         log.info("downloadFile completed")
@@ -108,7 +108,7 @@ class FileController (
         }
         val uploadFileDto =  uploadFileDtos.first()
 
-        val resource = fileStorageService!!.loadFileAsResource(uploadFileDto?.uniqFileName!!)
+        val resource = fileStorageService.loadFileAsResource(uploadFileDto?.uniqFileName!!)
         val result = downloadResource(resource, request)
 
         log.info("downloadFileByUuid completed")

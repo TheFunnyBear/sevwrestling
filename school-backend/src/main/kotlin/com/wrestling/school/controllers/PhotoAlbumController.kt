@@ -92,31 +92,20 @@ class PhotoAlbumController (private val repository: PhotoAlbumRepository) {
         log.info("Обновляем фотоальбом.")
 
         val existingPhotoAlbum = repository.findById(id)
-        if(existingPhotoAlbum != null) {
-            var existingPhotoAlbumDto: PhotoAlbumDto = existingPhotoAlbum.get()
+        var existingPhotoAlbumDto: PhotoAlbumDto = existingPhotoAlbum.get()
 
+        var updatePhotoAlbumDto =  existingPhotoAlbumDto.copy(
+                photoAlbumTitle = photoAlbum.photoAlbumTitle,
+                photoAlbumDescription =photoAlbum.photoAlbumDescription
+        )
 
-            var updatePhotoAlbumDto =  existingPhotoAlbumDto.copy(
-                    photoAlbumTitle = photoAlbum.photoAlbumTitle,
-                    photoAlbumDescription =photoAlbum.photoAlbumDescription
-            )
+        val result = repository.save(updatePhotoAlbumDto)
 
-            val result = repository.save(updatePhotoAlbumDto)
-
-            if (result != null) {
-                //val converter = Mappers.getMapper(PhotoAlbumConverter::class.java)
-                //val photoAlbumModel = converter.convertToModel(result)
-
-
-                return ResponseEntity.ok(PhotoAlbumModel(
-                        result.id,
-                        result.photoAlbumTitle,
-                        result.photoAlbumDescription
-                ))
-            }
-        }
-
-        return ResponseEntity.notFound().build()
+        return ResponseEntity.ok(PhotoAlbumModel(
+                result.id,
+                result.photoAlbumTitle,
+                result.photoAlbumDescription
+        ))
     }
 
     /**

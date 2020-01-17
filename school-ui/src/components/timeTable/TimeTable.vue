@@ -8,6 +8,7 @@
 
                 <b-tabs card>
                     <TimeTableItem :dayOfWeak = "'Понедельник'"
+                                   :dayIndex = "'monday'"
                                    :isWorkDay="CalendarModel.monday.isWorkDay"
                                    :openTime="CalendarModel.monday.openTime"
                                    :closeTime="CalendarModel.monday.closeTime"
@@ -15,6 +16,7 @@
                     </TimeTableItem>
 
                     <TimeTableItem :dayOfWeak = "'Вторник'"
+                                   :dayIndex = "'tuesday'"
                                    :isWorkDay="CalendarModel.tuesday.isWorkDay"
                                    :openTime="CalendarModel.tuesday.openTime"
                                    :closeTime="CalendarModel.tuesday.closeTime"
@@ -22,6 +24,7 @@
                     </TimeTableItem>
 
                     <TimeTableItem :dayOfWeak = "'Среда'"
+                                   :dayIndex = "'wednesday'"
                                    :isWorkDay="CalendarModel.wednesday.isWorkDay"
                                    :openTime="CalendarModel.wednesday.openTime"
                                    :closeTime="CalendarModel.wednesday.closeTime"
@@ -29,6 +32,7 @@
                     </TimeTableItem>
 
                     <TimeTableItem :dayOfWeak = "'Четверг'"
+                                   :dayIndex = "'thursday'"
                                    :isWorkDay="CalendarModel.thursday.isWorkDay"
                                    :openTime="CalendarModel.thursday.openTime"
                                    :closeTime="CalendarModel.thursday.closeTime"
@@ -36,6 +40,7 @@
                     </TimeTableItem>
 
                     <TimeTableItem :dayOfWeak = "'Пятница'"
+                                   :dayIndex = "'friday'"
                                    :isWorkDay="CalendarModel.friday.isWorkDay"
                                    :openTime="CalendarModel.friday.openTime"
                                    :closeTime="CalendarModel.friday.closeTime"
@@ -43,6 +48,7 @@
                     </TimeTableItem>
 
                     <TimeTableItem :dayOfWeak = "'Суббота'"
+                                   :dayIndex = "'saturday'"
                                    :isWorkDay="CalendarModel.saturday.isWorkDay"
                                    :openTime="CalendarModel.saturday.openTime"
                                    :closeTime="CalendarModel.saturday.closeTime"
@@ -50,6 +56,7 @@
                     </TimeTableItem>
 
                     <TimeTableItem :dayOfWeak = "'Воскресенье'"
+                                   :dayIndex = "'sunday'"
                                    :isWorkDay="CalendarModel.sunday.isWorkDay"
                                    :openTime="CalendarModel.sunday.openTime"
                                    :closeTime="CalendarModel.sunday.closeTime"

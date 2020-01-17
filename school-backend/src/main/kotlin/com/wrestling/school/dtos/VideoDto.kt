@@ -1,5 +1,6 @@
 package com.wrestling.school.dtos
 
+import org.springframework.data.mongodb.core.mapping.Document
 import java.util.*
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -9,7 +10,7 @@ import javax.persistence.Id
 /**
  * Видео файл
  */
-@Entity
+@Document(collection = "Videos")
 data class VideoDto (
         /**
          * Идентификатор видео

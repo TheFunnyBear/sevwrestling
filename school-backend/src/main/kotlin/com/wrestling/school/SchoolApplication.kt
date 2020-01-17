@@ -64,5 +64,5 @@ class SchoolApplication {
 }
 
 fun main(args: Array<String>) {
-    val runApplication = runApplication<SchoolApplication>(*args)
+    runApplication<SchoolApplication>(*args)
 }
