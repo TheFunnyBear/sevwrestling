@@ -7,7 +7,7 @@ package com.wrestling.school.models
     /**
      * Идентификатор фотоальбома
      */
-    val id: Long,
+    val id: String,
 
     /**
      * Заголовок фотоальбома

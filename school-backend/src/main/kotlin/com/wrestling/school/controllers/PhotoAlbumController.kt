@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.util.*
 
 @RestController
 @RequestMapping("/api")
@@ -53,7 +54,7 @@ class PhotoAlbumController (private val repository: PhotoAlbumRepository) {
      * Возвращает фотоальбом по его идентификатору
      */
     @GetMapping("/photoAlbum/{id}")
-    fun findById(@PathVariable id: Long): ResponseEntity<PhotoAlbumModel>? {
+    fun findById(@PathVariable id: String): ResponseEntity<PhotoAlbumModel>? {
         return repository.findById(id).map {
             ResponseEntity.ok(PhotoAlbumModel(
                     it.id,
@@ -70,11 +71,8 @@ class PhotoAlbumController (private val repository: PhotoAlbumRepository) {
     fun create(@RequestBody photoAlbum : PhotoAlbumModel) {
         log.info("Создание нового фотоальбома.")
 
-        //val converter = Mappers.getMapper(PhotoAlbumConverter::class.java)
-        //val photoAlbumDto = converter.convertToDto(photoAlbum)
-
         val photoAlbumDto = PhotoAlbumDto(
-                photoAlbum.id,
+                UUID.randomUUID().toString(),
                 photoAlbum.photoAlbumTitle,
                 photoAlbum.photoAlbumDescription
         )
@@ -87,14 +85,14 @@ class PhotoAlbumController (private val repository: PhotoAlbumRepository) {
      * Обновляем фотоальбом
      */
     @PostMapping("/photoAlbum/update/{id}")
-    fun update(@PathVariable id: Long, @RequestBody photoAlbum : PhotoAlbumModel) : ResponseEntity<PhotoAlbumModel>
+    fun update(@PathVariable id: String, @RequestBody photoAlbum : PhotoAlbumModel) : ResponseEntity<PhotoAlbumModel>
     {
         log.info("Обновляем фотоальбом.")
 
         val existingPhotoAlbum = repository.findById(id)
-        var existingPhotoAlbumDto: PhotoAlbumDto = existingPhotoAlbum.get()
+        val existingPhotoAlbumDto: PhotoAlbumDto = existingPhotoAlbum.get()
 
-        var updatePhotoAlbumDto =  existingPhotoAlbumDto.copy(
+        val updatePhotoAlbumDto =  existingPhotoAlbumDto.copy(
                 photoAlbumTitle = photoAlbum.photoAlbumTitle,
                 photoAlbumDescription =photoAlbum.photoAlbumDescription
         )
@@ -112,7 +110,7 @@ class PhotoAlbumController (private val repository: PhotoAlbumRepository) {
      * Удаляем фотоальбом
      */
     @DeleteMapping("/photoAlbum/delete/{id}")
-    fun delete(@PathVariable id: Long)
+    fun delete(@PathVariable id: String)
     {
         log.info("Удаление фотоальбома.")
 

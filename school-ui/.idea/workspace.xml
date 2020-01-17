@@ -14,11 +14,11 @@
       <change afterPath="$PROJECT_DIR$/src/components/PageHeader.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/coach/CoachInfoItem.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/coach/CoachInfoItemEdit.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/coach/CoachInfoList.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/maps/RouteMap.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/messages/MessageItem.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/messages/MessageItemEdit.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/messages/MessageManageItem.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/messages/MessageNotFoundAlert.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/messages/MessagesList.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/messages/MessagesManageList.vue" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/components/photoAlbums/PhotoAlbumManageItem.vue" afterDir="false" />

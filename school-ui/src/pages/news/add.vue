@@ -119,7 +119,7 @@
           /**
            * Идентификатор записи
            */
-          id: 0,
+          id: '',
 
           /**
            * Дата создания сообщения
@@ -147,10 +147,17 @@
           pictureUuid: null,
 
           /**
+           *  Уникальное имя файла
+           */
+          uniqFileName: '',
+
+          /**
            * Сообщение удалено
            */
           isDeleted: false
         },
+        fileUuid: '',
+        uploadFileUniqName: '',
         isAdminMode: true,
         pageTitle: 'Добавить новость',
         pageDescription: 'На этой странице вы можите добавить новость.',
@@ -161,22 +168,8 @@
       onSubmit(evt) {
         console.log("OnSubmit function invoked!");
         evt.preventDefault();
-
-        this.MessageModel.createdDate = moment.utc(this.publicationDate);
-        this.MessageModel.publicationDate = moment.utc(moment().format());
-        this.MessageModel.messageTitle = this.form.title;
-        this.MessageModel.messageText = this.form.description;
-        this.MessageModel.pictureUuid = '112e6e84-a89c-45b4-a278-f2ab97d2bdfc';
-        this.MessageModel.isDeleted = false;
-
-        let url = `message/create/`;
-        this.$http.post(url, JSON.stringify( this.MessageModel)).then(response => {
-          console.log("Post response completed with status:", response.status);
-          this.$router.push('/news_list');
-
-        }, response => {
-          // error callback
-        });
+        this.uploadFile();
+        console.log("OnSubmit function completed.");
       },
 
       onReset(evt) {
@@ -192,7 +185,56 @@
         this.$nextTick(() => {
           this.show = true
         })
-      }
+      },
+
+      uploadFile: function () {
+        console.log('Sending file');
+        let formData = new FormData();
+        formData.append('file', this.form.photoFile);
+
+        let url = `files/uploadFile/`;
+        this.$http.post(
+                url,
+                formData,
+                {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }
+        ).then(result =>
+                result.json().then(data => {
+                          this.fileUuid = data.fileUuid;
+                          this.uploadFileUniqName = data.uniqFileName;
+                          this.size = data.size;
+                          console.log("File uploaded start sending data");
+                          this.sendData();
+                        }
+                ), response => {
+          console.log("File was not uploaded not sending data");
+          // error callback
+        });
+      },
+
+      sendData: function () {
+        console.log('Sending data');
+
+        this.MessageModel.createdDate = moment.utc(this.publicationDate);
+        this.MessageModel.publicationDate = moment.utc(moment().format());
+        this.MessageModel.messageTitle = this.form.title;
+        this.MessageModel.messageText = this.form.description;
+        this.MessageModel.pictureUuid = this.fileUuid;
+        this.MessageModel.uniqFileName = this.uploadFileUniqName;
+        this.MessageModel.isDeleted = false;
+
+        let url = `message/create/`;
+        this.$http.post(url, JSON.stringify( this.MessageModel)).then(response => {
+          console.log("Post response completed with status:", response.status);
+          this.$router.push('/news_list');
+
+        }, response => {
+          // error callback
+        });
+      },
     }
   }
 </script>

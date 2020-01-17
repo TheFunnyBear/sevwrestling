@@ -12,21 +12,15 @@ import javax.persistence.Id
 @Document(collection = "Pictures")
 data class PictureDto (
         /**
-         * Идентификатор изображения
-         */
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        val id: Long = 0,
-
-        /**
          * Уникальны идентификатор изображения
          */
+        @Id
         val pictureUuid: UUID = UUID.randomUUID(),
 
         /**
          * Идентификатор фотоальбома
          */
-        val photoAlbumId: Long = 0,
+        val photoAlbumId: String = "",
 
         /**
          *  Уникальное имя файла

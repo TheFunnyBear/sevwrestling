@@ -1,7 +1,7 @@
 <template>
     <b-col md="4">
         <b-card
-                img-src="https://picsum.photos/600/300/?image=25"
+                :img-src="message.pictureDownloadUri"
                 img-alt="Image"
                 img-top
                 tag="article"

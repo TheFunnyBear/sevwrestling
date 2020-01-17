@@ -4,6 +4,6 @@ import com.wrestling.school.dtos.MessageDto
 import org.springframework.data.mongodb.repository.MongoRepository
 
 
-interface MessagesRepository : MongoRepository<MessageDto, Long> {
+interface MessagesRepository : MongoRepository<MessageDto, String> {
 
 }

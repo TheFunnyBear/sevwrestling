@@ -18,8 +18,7 @@ data class MessageDto (
          * Идентификатор записи
          */
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        val id: Long = 0,
+        val id: String = UUID.randomUUID().toString(),
 
         /**
          * Дата создания сообщения
@@ -46,6 +45,11 @@ data class MessageDto (
          * Идентификатор изображения
          */
         val pictureUuid: UUID = UUID.randomUUID(),
+
+        /**
+         *  Уникальное имя файла изображения
+         */
+        val uniqFileName: String = "",
 
         /**
          * Сообщение удалено

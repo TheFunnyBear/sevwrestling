@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.data.mongodb.repository.MongoRepository
 import java.util.*
 
-interface UploadFileRepository : MongoRepository<UploadFileDto, Long> {
+interface UploadFileRepository : MongoRepository<UploadFileDto, String> {
     @Query("SELECT t FROM UploadFileDto t WHERE t.fileUuid = :uuid")
     fun findByFileUuid(uuid: UUID): List<UploadFileDto?>?
 }

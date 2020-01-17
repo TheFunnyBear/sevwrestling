@@ -4,7 +4,7 @@ class CoachInfoModel (
         /**
          * Идентификатор
          */
-        val id: Long,
+        val id: String,
 
         /**
          * Имя

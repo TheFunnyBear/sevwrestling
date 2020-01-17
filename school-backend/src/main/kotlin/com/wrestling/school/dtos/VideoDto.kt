@@ -13,15 +13,9 @@ import javax.persistence.Id
 @Document(collection = "Videos")
 data class VideoDto (
         /**
-         * Идентификатор видео
-         */
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        val id: Long = 0,
-
-        /**
          * Уникальны идентификатор видео
          */
+        @Id
         val videoUuid: UUID = UUID.randomUUID(),
 
         /**

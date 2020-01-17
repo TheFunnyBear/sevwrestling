@@ -5,6 +5,7 @@ import javafx.application.Application
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.util.*
 
 @RestController
 @RequestMapping("/api")
@@ -58,7 +59,7 @@ class CoachInfoController (private val repository: CoachInfoRepository) {
         log.info("Создание нового тренера.")
 
         val calendarDto = CoachInfoDto(
-                coachInfoModel.id,
+                UUID.randomUUID().toString(),
                 coachInfoModel.name,
                 coachInfoModel.surname,
                 coachInfoModel.patronymic,

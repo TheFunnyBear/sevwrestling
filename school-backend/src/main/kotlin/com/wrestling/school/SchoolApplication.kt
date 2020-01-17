@@ -23,7 +23,7 @@ class SchoolApplication {
     fun init(messagesRepository: MessagesRepository,
              photoAlbumRepository: PhotoAlbumRepository,
              pictureRepository: PictureRepository ) = CommandLineRunner {
-
+/*
         val currentDate = LocalDateTime.now()
         for(i in 1..100)
         {
@@ -50,7 +50,7 @@ class SchoolApplication {
 
         }
 
-
+*/
 
         log.info("Test messages created!");
 

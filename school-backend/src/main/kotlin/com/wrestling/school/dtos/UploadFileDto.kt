@@ -15,8 +15,7 @@ data class UploadFileDto (
          * Идентификатор
          */
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        val id: Long = 0,
+        val id: String = UUID.randomUUID().toString(),
 
         /**
          *  Уникальный идентификатор файла

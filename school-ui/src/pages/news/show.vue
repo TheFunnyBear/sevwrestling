@@ -11,9 +11,8 @@
                 <p class="mb-0">
                     {{messageText}}
                 </p>
-                <p class="mb-0">
-                    {{pictureUuid}}
-                    <b-img-lazy v-bind="mainProps" :src="getImageUrl(82)" alt="Image 2"></b-img-lazy>
+                <p class="mb-0" v-if="this.pictureDownloadUri != null">
+                    <b-img-lazy v-bind="mainProps" :src="this.pictureDownloadUri"></b-img-lazy>
                 </p>
             </b-media-body>
         </b-card>
@@ -61,16 +60,12 @@
                         this.messageText = data.messageText;
                         this.pictureUuid = data.pictureUuid;
                         this.isDeleted = data.isDeleted;
+                        this.pictureDownloadUri = data.pictureDownloadUri;
                     }
                 )
             )
         },
         methods: {
-            getImageUrl(imageId) {
-                const {width, height} = this.mainProps
-                return `https://picsum.photos/${width}/${height}/?image=${imageId}`
-            },
-
             convertToHumanTime: function (publicationDate) {
                 const messageTime = new moment(publicationDate);
                 return moment.utc(messageTime).format("DD-MM-YYYY");
